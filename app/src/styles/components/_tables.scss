@@ -1,0 +1,259 @@
+// ==========================================================================
+// TABLE COMPONENTS
+// ==========================================================================
+// Table and data grid styles.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Table Container
+// --------------------------------------------------------------------------
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    @include custom-scrollbar;
+    // border: 1px solid var(--border-color);
+    border-radius: $border-radius-3xl;
+    corner-shape: superellipse(1.2);
+}
+
+// --------------------------------------------------------------------------
+// Table
+// --------------------------------------------------------------------------
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    &__header {
+        background-color: alpha($color-gray-900, 0.1);
+    }
+    th,
+    td {
+        padding: $spacing-3 $spacing-4;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: var(--text-secondary);
+        letter-spacing: $letter-spacing-wide;
+        white-space: nowrap;
+    }
+
+    td {
+        font-size: $font-size-sm;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr {
+        @include transition(background-color);
+        margin: $spacing-1;
+        &:hover {
+        background: alpha($color-gray-900, 0.2) ;
+        }
+
+        &:last-child td {
+            border-bottom: none;
+        }
+    }
+
+    // Variants
+    &--striped tbody tr:nth-child(even) {
+        background-color: var(--bg-surface);
+
+        &:hover {
+            background-color: rgba($color-primary, 0.05);
+        }
+    }
+
+    &--borderless {
+        td,
+        th {
+            border: none;
+        }
+    }
+
+    &--compact {
+
+        th,
+        td {
+            padding: $spacing-2 $spacing-3;
+        }
+    }
+    
+    &--transparent {
+        background: transparent;
+        border: none;
+
+        th{
+            border: none;
+        }
+        td {
+            background: transparent;
+            border: none;
+        }
+    }
+
+    // Sortable headers
+    &__sortable {
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        @include flex-row($spacing-1);
+
+        &:hover {
+            color: var(--text-primary);
+        }
+
+        svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.5;
+        }
+
+        &.is-active svg {
+            opacity: 1;
+            color: $color-primary;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Table Cell Variants
+// --------------------------------------------------------------------------
+
+.table-cell {
+    &--actions {
+        width: 1%;
+        white-space: nowrap;
+
+        .btn {
+            opacity: 0.5;
+            @include transition(opacity);
+        }
+
+        tr:hover & .btn {
+            opacity: 1;
+        }
+    }
+
+    &--checkbox {
+        width: 40px;
+    }
+
+    &--avatar {
+        @include flex-row($spacing-3);
+
+        img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    &--badge {
+        display: inline-flex;
+    }
+
+    &--truncate {
+        max-width: 200px;
+        @include text-truncate;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Table Empty State
+// --------------------------------------------------------------------------
+
+.table-empty {
+    padding: $spacing-12;
+    text-align: center;
+
+    &__icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto $spacing-3;
+        color: var(--text-secondary);
+    }
+
+    &__title {
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        margin-bottom: $spacing-1;
+    }
+
+    &__description {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+}
+
+// --------------------------------------------------------------------------
+// Table Pagination
+// --------------------------------------------------------------------------
+
+.table-pagination {
+    @include flex-between;
+    padding: $spacing-4;
+    border-top: 1px solid var(--border-color);
+
+    &__info {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+
+    &__controls {
+        @include flex-row($spacing-2);
+    }
+
+    &__btn {
+        @extend %btn-base;
+        padding: $spacing-2;
+        background: transparent;
+        border: 1px solid var(--border-color);
+
+        &:hover:not(:disabled) {
+            background: var(--bg-surface);
+        }
+
+        &:disabled {
+            opacity: 0.3;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    &__pages {
+        @include flex-row($spacing-1);
+    }
+
+    &__page {
+        @extend %btn-base;
+        min-width: 32px;
+        padding: $spacing-1 $spacing-2;
+        font-size: $font-size-sm;
+        background: transparent;
+
+        &:hover:not(:disabled):not(.is-active) {
+            background: var(--bg-surface);
+        }
+
+        &.is-active {
+            background: $color-primary;
+            color: $color-white;
+        }
+    }
+}

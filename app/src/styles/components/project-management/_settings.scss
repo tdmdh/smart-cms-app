@@ -1,0 +1,228 @@
+// ==========================================================================
+// PROJECT SETTINGS
+// ==========================================================================
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+.project-settings {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+
+    // Header
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: $spacing-2;
+        flex-wrap: wrap;
+        gap: $spacing-3;
+
+        &-left {
+            display: flex;
+            align-items: center;
+            gap: $spacing-3;
+        }
+
+        &-actions {
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+        }
+    }
+
+    // Section Container
+    &__section {
+        background: var(--surface-primary);
+        border: 1px solid var(--border-primary);
+        border-radius: $border-radius-xl;
+        overflow: hidden;
+
+        &--danger {
+            border-color: rgba($color-error, 0.3);
+            background: rgba($color-error, 0.02);
+        }
+    }
+
+    &__section-header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        padding: $spacing-4 $spacing-5;
+        border-bottom: 1px solid var(--border-primary);
+        background: var(--surface-secondary);
+
+        &--danger {
+            background: rgba($color-error, 0.05);
+            border-bottom-color: rgba($color-error, 0.2);
+        }
+    }
+
+    &__section-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: $border-radius-lg;
+        background: rgba($color-primary, 0.1);
+        color: $color-primary;
+
+        &--danger {
+            background: rgba($color-error, 0.1);
+            color: $color-error;
+        }
+    }
+
+    &__section-title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin: 0;
+
+        &--danger {
+            color: $color-error;
+        }
+    }
+
+    &__section-body {
+        padding: $spacing-5;
+    }
+
+    // Form Grid
+    &__form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-4;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+        &--three {
+            grid-template-columns: repeat(3, 1fr);
+
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+
+    &__form-group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+
+        &--full {
+            grid-column: 1 / -1;
+        }
+    }
+
+    &__label {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-secondary);
+
+        svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+    }
+
+    &__input,
+    &__select,
+    &__textarea {
+        width: 100%;
+        padding: $spacing-3;
+        background: var(--surface-secondary);
+        border: 1px solid var(--border-primary);
+        border-radius: $border-radius-lg;
+        font-size: $font-size-sm;
+        color: var(--text-primary);
+        @include transition((border-color, box-shadow));
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: var(--text-tertiary);
+        }
+    }
+
+    &__textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    &__select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right $spacing-3 center;
+        padding-right: $spacing-8;
+    }
+
+    // Divider
+    &__divider {
+        height: 1px;
+        background: var(--border-primary);
+        margin: $spacing-4 0;
+    }
+
+    // Actions
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: $spacing-3;
+        padding-top: $spacing-4;
+        border-top: 1px solid var(--border-primary);
+        margin-top: $spacing-4;
+    }
+
+    // Danger Zone
+    &__danger-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-4;
+
+        @media (max-width: 640px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    &__danger-info {
+        flex: 1;
+    }
+
+    &__danger-title {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        margin: 0 0 $spacing-1;
+    }
+
+    &__danger-description {
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+        margin: 0;
+    }
+
+    // Loading state
+    &--loading {
+        .project-settings__section {
+            animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+    }
+}

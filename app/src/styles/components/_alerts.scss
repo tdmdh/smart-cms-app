@@ -1,0 +1,295 @@
+// ==========================================================================
+// ALERT COMPONENTS
+// ==========================================================================
+// Alert and notification styles.
+// ==========================================================================
+
+@use 'sass:math';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+@use 'sass:color';
+
+// --------------------------------------------------------------------------
+// Alert
+// --------------------------------------------------------------------------
+
+.alert {
+    display: flex;
+    gap: $spacing-3;
+    padding: $spacing-4;
+    border-radius: $border-radius-3xl;
+    corner-shape: superellipse(1.2);
+    border: 1px solid transparent;
+    background-color: $color-gray-100;
+    border-color: $color-gray-200;
+    color: $color-gray-800;
+
+    &__icon {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+    }
+
+    &__content {
+        flex: 1;
+    }
+
+    &__title {
+        font-weight: $font-weight-semibold;
+        margin-bottom: $spacing-1;
+    }
+
+    &__message {
+        font-size: $font-size-sm;
+        line-height: $line-height-relaxed;
+    }
+
+    &__close {
+        @extend %reset-button;
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        @include flex-center;
+        border-radius: $border-radius-base;
+        opacity: 0.6;
+        margin: ($spacing-1 * -1);
+        @include transition((opacity, background-color));
+
+        &:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    &__actions {
+        width: 100%;
+        @include flex-row($spacing-2);
+        margin-top: $spacing-3;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Alert Variants
+// --------------------------------------------------------------------------
+
+.alert-info {
+    @extend .alert;
+    background-color: alpha($color-info, 0.1);
+    border-color: alpha($color-info, 0.2);
+    color: $color-info-dark;
+
+    .alert__icon {
+        color: $color-info;
+    }
+}
+
+.alert-success {
+    @extend .alert;
+    background-color: alpha($color-success, 0.1);
+    border-color: alpha($color-success, 0.2);
+    color: $color-success-dark;
+
+    .alert__icon {
+        color: $color-success;
+    }
+}
+
+.alert-warning {
+    @extend .alert;
+    background-color: alpha($color-warning, 0.1);
+    border-color: alpha($color-warning, 0.2);
+    color: $color-warning-dark;
+
+    .alert__icon {
+        color: $color-warning;
+    }
+}
+
+.alert-error {
+    @extend .alert;
+    background-color: alpha($color-error, 0.1);
+    border-color: alpha($color-error, 0.2);
+    color: $color-error-dark;
+
+    .alert__icon {
+        color: $color-error;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Toast Notification
+// --------------------------------------------------------------------------
+
+.toast-container {
+    position: fixed;
+    z-index: z('toast');
+    pointer-events: none;
+
+    &--top-right {
+        top: $spacing-4;
+        right: $spacing-4;
+    }
+
+    &--top-left {
+        top: $spacing-4;
+        left: $spacing-4;
+    }
+
+    &--bottom-right {
+        bottom: $spacing-4;
+        right: $spacing-4;
+    }
+
+    &--bottom-left {
+        bottom: $spacing-4;
+        left: $spacing-4;
+    }
+
+    &--top-center {
+        top: $spacing-4;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &--bottom-center {
+        bottom: $spacing-4;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-3;
+    min-width: 300px;
+    max-width: 420px;
+    padding: $spacing-3;
+    border: 1px solid transparent;
+    border-radius: $border-radius-2xl;
+    corner-shape: superellipse(1.2);
+    corner-shape: squircle;
+    box-shadow: $shadow-xl;
+    background-color: alpha($color-gray-900, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: auto;
+    animation: toast-enter 0.2s ease-out;
+    margin-bottom: $spacing-3;
+    transform-origin: top center;
+
+    &.is-leaving {
+        animation: toast-leave 0.2s ease-in forwards;
+    }
+
+    &--success {
+        background-color: alpha($color-success, 0.1);
+        border-color: alpha($color-success, 0.2);
+        color: $color-success-dark;
+    }
+
+    &--error {
+        background-color: alpha($color-error, 0.1);
+        border-color: alpha($color-error, 0.2);
+        color: $color-error-dark;
+    }
+
+    &--warning {
+        background-color: alpha($color-warning, 0.1);
+        border-color: alpha($color-warning, 0.2);
+        color: $color-warning-dark;
+    }
+
+    &--info {
+        background-color: alpha($color-info, 0.1);
+        border-color: alpha($color-info, 0.2);
+        color: $color-info-dark;
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+
+    }
+
+    &__message {
+        font-size: $font-size-sm;
+        color: $color-gray-200;
+    }
+
+    &__close {
+        @extend %reset-button;
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        @include flex-center;
+        border-radius: $border-radius-xl;
+        corner-shape: squircle;
+        color: $color-gray-600;
+        @include transition((background-color, color));
+
+        &:hover {
+            background-color: $color-gray-500;
+            color: $color-gray-800;
+        }
+    }
+
+    // Variants
+    &--success .toast__icon {
+        color: $color-success;
+    }
+
+    &--error .toast__icon {
+        color: $color-error;
+    }
+
+    &--warning .toast__icon {
+        color: $color-warning;
+    }
+
+    &--info .toast__icon {
+        color: $color-info;
+    }
+}
+
+@keyframes toast-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toast-leave {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-10px) scale(0);
+    }
+}

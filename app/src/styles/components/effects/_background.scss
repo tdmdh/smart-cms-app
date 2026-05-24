@@ -1,0 +1,186 @@
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+
+    &--color-bends {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 150vh;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+
+        &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 30%;
+                background: linear-gradient(to bottom,
+                        transparent 0%,
+                        $bg-dark 100%);
+                pointer-events: none;
+                z-index: 5;
+            }
+    }
+
+    &__triangle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $bg-dark;
+        clip-path: polygon(50% 0%,
+                70% 0%,
+                100% 0%,
+                65% 20%,
+                50% 90%,
+                35% 20%,
+                0% 0%,
+                30% 0%);
+
+        &--mini {
+            position: absolute;
+            top: 0;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            background-color: $color-secondary-dark;
+            clip-path: polygon(50% 0%,
+                    70% 0%,
+                    100% 0%,
+                    65% 20%,
+                    50% 80%,
+                    35% 20%,
+                    0% 0%,
+                    30% 0%);
+
+        }
+
+        &--minimini {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background-color: $color-secondary-light;
+            clip-path: polygon(50% 0%,
+                    70% 0%,
+                    100% 0%,
+                    65% 20%,
+                    50% 60%,
+                    35% 20%,
+                    0% 0%,
+                    30% 0%);
+        }
+
+        &--miniminimini {
+            position: absolute;
+            top: 0;
+            left: 25%;
+            width: 50%;
+            height: 50%;
+            background-color: $color-accent-dark;
+            clip-path: polygon(50% 0%,
+                    70% 0%,
+                    100% 0%,
+                    65% 20%,
+                    50% 40%,
+                    35% 20%,
+                    0% 0%,
+                    30% 0%);
+        }
+
+        &--miniminiminimini {
+            position: absolute;
+            top: 0;
+            left: 30%;
+            width: 40%;
+
+            height: 40%;
+            background-color: $color-white;
+            clip-path: polygon(50% 0%,
+                    70% 0%,
+                    100% 0%,
+                    65% 20%,
+                    50% 40%,
+                    35% 20%,
+                    0% 0%,
+                    30% 0%);
+        }
+    }
+
+    &__blurlayer {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        -webkit-backdrop-filter: blur(60px);
+        backdrop-filter: blur(60px);
+        // Prevent flickering by forcing GPU compositing
+        // will-change: backdrop-filter;
+        // transform: translateZ(0);
+        // backface-visibility: hidden;
+        // isolation: isolate;
+
+    }
+
+    &__blurlayer::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        -webkit-backdrop-filter: blur(80px);
+        backdrop-filter: blur(80px);
+        // transform: translateZ(0);
+    }
+
+    &__blurlayer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        -webkit-backdrop-filter: blur(120px);
+        backdrop-filter: blur(120px);
+        // transform: translateZ(0);
+    }
+
+    // &__smoke {
+    //     position: absolute;
+    //     top: 0;
+    //     left: 20%;
+    //     width: 60%;
+    //     height: 60%;
+    //     z-index: 1;
+    // }
+
+    // &__glow {
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: 30%;
+    //     z-index: 1;
+    // }
+
+    // &__lightbeam {
+    //     position: relative;
+    //     top: 0;
+    //     left: 0;
+    //     width: 100%;
+    //     height: 100%;
+    //     z-index: 0;
+    // }
+
+}

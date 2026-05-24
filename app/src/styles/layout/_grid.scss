@@ -1,0 +1,83 @@
+// ==========================================================================
+// GRID LAYOUT
+// ==========================================================================
+// Grid system and layout utilities.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+.container {
+    width: 100%;
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $spacing-4;
+
+    @include respond-to('md') {
+        padding: 0 $spacing-6;
+    }
+
+    @include respond-to('lg') {
+        padding: 0 $spacing-8;
+    }
+
+    &--narrow {
+        max-width: $content-max-width;
+    }
+
+    &--fluid {
+        max-width: none;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Grid
+// --------------------------------------------------------------------------
+
+.grid {
+    display: grid;
+    gap: $spacing-4;
+
+    &--2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    &--auto-fit {
+        @include grid-auto-fit(280px);
+    }
+
+    &--auto-fill {
+        @include grid-auto-fill(280px);
+    }
+}
+
+// Responsive grid
+.grid-responsive {
+    display: grid;
+    gap: $spacing-4;
+    grid-template-columns: 1fr;
+
+    @include respond-to('sm') {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include respond-to('xl') {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

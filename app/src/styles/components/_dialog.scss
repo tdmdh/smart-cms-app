@@ -1,0 +1,167 @@
+// ==========================================================================
+// DIALOG COMPONENT
+// ==========================================================================
+
+
+@use 'sass:math';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+
+.dialog {
+    &__overlay {
+        position: fixed;
+        inset: 0;
+        z-index: z('modal');
+        background: alpha($color-gray-950, 0.4);
+        backdrop-filter: blur(4px);
+
+        &[data-state='open'] {
+            animation: fadeIn 0.15s ease-out;
+        }
+
+        &[data-state='closed'] {
+            animation: fadeOut 0.15s ease-in;
+        }
+    }
+
+    &__content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: z('modal');
+        display: grid;
+        width: 100%;
+        max-width: 500px; // Default size, similar to modal default
+        transform: translate(-50%, -50%);
+        gap: $spacing-4;
+        -webkit-backdrop-filter: blur(24px);
+        backdrop-filter: blur(24px);
+        background-color: alpha($color-gray-950, 0.08);
+        border: 1px solid alpha($color-gray-700, 0.18);
+        padding: $spacing-4;
+        box-shadow: $shadow-2xl;
+        border-radius: $border-radius-5xl;
+        corner-shape: superellipse(1.2);
+
+        &[data-state='open'] {
+            animation: contentShow 0.15s ease-out;
+        }
+
+        &[data-state='closed'] {
+            animation: contentHide 0.1s ease-in;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+        text-align: center;
+
+        // @include mq(sm) {
+        //     text-align: left;
+        // }
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: $spacing-2;
+
+        // @include mq(sm) {
+        //     flex-direction: row;
+        //     justify-content: flex-end;
+        // }
+    }
+
+    &__title {
+        font-family: $font-family-heading;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-white;
+        line-height: $line-height-none;
+    }
+
+    &__description {
+        font-size: $font-size-sm;
+        color: $color-gray-400;
+        line-height: $line-height-relaxed;
+        margin-inline-start: $spacing-2;
+    }
+
+    &__close {
+        position: absolute;
+        right: $spacing-4;
+        top: $spacing-4;
+        border-radius: $border-radius-sm;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        color: $color-gray-400;
+        cursor: pointer;
+
+        background: transparent;
+        border: none;
+        padding: $spacing-1;
+        display: none;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            opacity: 1;
+            color: $color-white;
+            background: alpha($color-white, 0.1);
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px $color-gray-500;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes contentShow {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes contentHide {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.96);
+    }
+}

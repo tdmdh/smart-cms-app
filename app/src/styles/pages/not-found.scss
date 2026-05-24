@@ -1,0 +1,117 @@
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #071529 0%, #0b2545 50%, #13315c 100%);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(232, 239, 247, 0.1) 0%, transparent 70%);
+    animation: pulse 15s ease-in-out infinite;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  &__content {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  &__code {
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 800;
+    font-family: var(--font-heading);
+    background: linear-gradient(135deg, #e8eff7 0%, #8fadcc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 80px rgba(232, 239, 247, 0.3);
+  }
+
+  &__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: #e8eff7;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  &__description {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: rgba(232, 239, 247, 0.8);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .not-found {
+    padding: 1rem;
+
+    &__content {
+      padding: 2rem 1.5rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+      width: 100%;
+
+      a {
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

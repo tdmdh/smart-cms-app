@@ -1,0 +1,835 @@
+//========================================================================== // FORM COMPONENTS
+// ==========================================================================
+// Form elements, inputs, and form layouts.
+// ==========================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Form Group
+// --------------------------------------------------------------------------
+
+.form-group {
+  margin-bottom: $spacing-5;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Labels
+// --------------------------------------------------------------------------
+
+.form-label {
+  @extend %label-base;
+
+  // &--required {
+  //     &::after {
+  //         content: ' *';
+  //         color: $color-error;
+  //     }
+  // }
+}
+
+.form-hint {
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  margin: $spacing-1;
+}
+
+.form-error {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  padding: $spacing-1 $spacing-2;
+  border-radius: $border-radius-xl;
+  @include transition(all 0.2s ease);
+  color: $color-error;
+  @include flex-row($spacing-1);
+
+  svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Duo Input (for things like date range, price range, etc.)
+// --------------------------------------------------------------------------
+
+.duoForm_input {
+  display: flex;
+  flex-direction: column;
+
+  &--top-input {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0.5px;
+  }
+
+  &--bottom-input {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: -0.5px;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Input
+// --------------------------------------------------------------------------
+
+.input {
+  @extend %input-base;
+
+  &--sm {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+  }
+
+  &--lg {
+    padding: $spacing-4 $spacing-5;
+    font-size: $font-size-lg;
+  }
+
+  &--error {
+    border-color: $color-error;
+
+    &:focus {
+      border-color: $color-error;
+      box-shadow: 0 0 0 3px alpha($color-error, 0.1);
+    }
+  }
+
+  &--success {
+    border-color: $color-success;
+
+    &:focus {
+      border-color: $color-success;
+      box-shadow: 0 0 0 3px alpha($color-success, 0.1);
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+
+  .input {
+    &--icon-left {
+      padding-left: $spacing-10;
+    }
+
+    &--icon-right {
+      padding-right: $spacing-10;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--text-secondary);
+    pointer-events: none;
+
+    &--left {
+      left: $spacing-3;
+    }
+
+    &--right {
+      right: $spacing-3;
+    }
+  }
+
+  &__action {
+    position: absolute;
+    right: $spacing-2;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Textarea
+// --------------------------------------------------------------------------
+
+.textarea {
+  @extend %input-base;
+  resize: vertical;
+
+  &--no-resize {
+    resize: none;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Select (Radix UI)
+// --------------------------------------------------------------------------
+
+.select-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2;
+  width: fit-content;
+  height: 36px;
+  padding: $spacing-2 $spacing-4;
+  font-family: $font-family-sans;
+  font-size: $font-size-xs;
+  line-height: $line-height-normal;
+  color: $text-dark-muted;
+  white-space: nowrap;
+  background: $color-primary-dark;
+  border: 1px solid color.adjust($color-secondary, $lightness: 5%);
+  border-radius: calc($border-radius-3xl - $spacing-3 * 0.75);
+  corner-shape: superellipse(1.1);
+  cursor: pointer;
+  outline: none;
+  @include transition((border-color, box-shadow));
+
+  &:hover {
+    border-color: $color-secondary-light;
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: $color-secondary-light;
+    box-shadow: 0 0 0 4px alpha($color-secondary-light, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--sm {
+    height: 32px;
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  [data-placeholder] {
+    color: $color-gray-500;
+  }
+
+  [data-slot="select-value"] {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .select__chevron {
+    // margin-top: 5px;
+    flex-shrink: 0;
+    opacity: 0.5;
+    @include transition(transform, opacity);
+  }
+
+  &[data-state="open"] .select__chevron {
+    opacity: 0.4;
+    transform: rotate(180deg);
+  }
+}
+
+.select-content {
+  position: relative;
+  z-index: $z-index-dropdown;
+  min-width: 8rem;
+  max-height: var(--radix-select-content-available-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: $spacing-1;
+  background: $color-secondary-dark;
+  border: 1px solid alpha($color-gray-900, 0.2);
+  border-radius: $border-radius-3xl;
+  corner-shape: superellipse(1.2);
+  box-shadow: $shadow-2xl;
+
+  &[data-state="open"] {
+    animation: selectSlideIn 0.2s ease-out;
+  }
+
+  &[data-state="closed"] {
+    animation: selectSlideOut 0.15s ease-in;
+  }
+
+  &--popper {
+    &[data-side="bottom"] {
+      transform: translateY($spacing-1);
+    }
+
+    &[data-side="top"] {
+      transform: translateY(-$spacing-1);
+    }
+
+    &[data-side="left"] {
+      transform: translateX(-$spacing-1);
+    }
+
+    &[data-side="right"] {
+      transform: translateX($spacing-1);
+    }
+  }
+}
+
+.select-viewport {
+  padding: $spacing-1;
+}
+
+.select-label {
+  padding: $spacing-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-gray-500;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.select-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-2 $spacing-8 $spacing-2 $spacing-3;
+  font-family: $font-family-sans;
+  font-size: $font-size-sm;
+  color: $color-gray-200;
+  // background: transparent;
+  border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+  @include transition((background-color, color));
+
+  &:hover,
+  &:focus,
+  &[data-highlighted] {
+    background: rgba($color-primary, 0.15);
+    color: $color-white;
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__indicator {
+    position: absolute;
+    right: $spacing-2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+}
+
+.select-separator {
+  height: 1px;
+  margin: $spacing-1 (
+    -$spacing-1
+  );
+background-color: rgba($color-gray-600, 0.3);
+pointer-events: none;
+}
+
+.select-scroll-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-1;
+  cursor: default;
+  color: $color-gray-400;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Animations
+@keyframes selectSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-$spacing-2);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes selectSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-$spacing-2);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Multi-Select
+// --------------------------------------------------------------------------
+
+.multi-select {
+  position: relative;
+  width: 100%;
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2;
+    width: 100%;
+    min-height: 40px;
+    padding: $spacing-2 $spacing-3;
+    font-family: $font-family-sans;
+    font-size: $font-size-sm;
+    color: $text-dark-muted;
+    background: $color-primary-dark;
+    border: 1px solid color.adjust($color-secondary, $lightness: 5%);
+    border-radius: $border-radius-3xl;
+    corner-shape: superellipse(1.2);
+    cursor: pointer;
+    outline: none;
+    text-align: left;
+    @include transition((border-color, box-shadow));
+
+    &:hover {
+      border-color: $color-secondary-light;
+    }
+
+    &:focus,
+    &:focus-visible {
+      border-color: $color-secondary-light;
+      box-shadow: 0 0 0 3px alpha($color-secondary-light, 0.2);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__placeholder {
+    color: $color-gray-500;
+  }
+
+  &__chevron {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.5;
+    @include transition(transform);
+
+    .multi-select--open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__selected {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: $spacing-1 $spacing-2;
+    background: rgba($color-primary, 0.15);
+    border-radius: $border-radius-md;
+    font-size: $font-size-xs;
+    color: $color-gray-200;
+
+    &-label {
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: $color-gray-400;
+      cursor: pointer;
+      @include transition(color);
+
+      &:hover {
+        color: $color-error;
+      }
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  &__more {
+    font-size: $font-size-xs;
+    color: $color-gray-400;
+    padding: $spacing-1;
+  }
+
+  &__content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: $z-index-dropdown;
+    margin-top: $spacing-1;
+    padding: $spacing-1;
+    background: $color-secondary-dark;
+    border: 1px solid alpha($color-gray-900, 0.2);
+    border-radius: $border-radius-3xl;
+    corner-shape: superellipse(1.2);
+    box-shadow: $shadow-xl;
+    max-height: 250px;
+    overflow-y: auto;
+    animation: selectSlideIn 0.15s ease-out;
+  }
+
+  &__option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    width: 100%;
+    padding: $spacing-2;
+    font-family: $font-family-sans;
+    font-size: $font-size-sm;
+    color: $color-gray-200;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-3xl;
+    corner-shape: superellipse(1.2);
+    cursor: pointer;
+    text-align: left;
+    @include transition((background-color, color));
+
+    &:hover {
+      background: rgba($color-primary, 0.15);
+      color: $color-white;
+    }
+
+    &--selected {
+      background: rgba($color-primary, 0.2);
+      color: $color-white;
+    }
+
+    &-icon {
+      flex-shrink: 0;
+    }
+
+    &-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-check {
+      flex-shrink: 0;
+      color: $color-success;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  &__empty {
+    padding: $spacing-3;
+    text-align: center;
+    color: $color-gray-500;
+    font-size: $font-size-sm;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Checkbox & Radio
+// --------------------------------------------------------------------------
+
+.checkbox,
+.radio {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: $color-primary;
+    cursor: pointer;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    color: var(--text-primary);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  &:hover input:not(:disabled) {
+    opacity: 0.8;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Switch/Toggle
+// --------------------------------------------------------------------------
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  &__track {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: $color-gray-300;
+    border-radius: $border-radius-full;
+    @include transition(background-color);
+
+    .dark & {
+      background: $color-gray-600;
+    }
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: $color-white;
+    border-radius: 50%;
+    box-shadow: $shadow-sm;
+    @include transition(transform);
+  }
+
+  input {
+    @include sr-only;
+
+    &:checked+.switch__track {
+      background: $color-primary;
+
+      .switch__thumb {
+        transform: translateX(20px);
+      }
+    }
+
+    &:focus-visible+.switch__track {
+      box-shadow: 0 0 0 2px $bg-light, 0 0 0 4px $color-primary;
+    }
+
+    &:disabled+.switch__track {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    color: var(--text-primary);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Form Row (Horizontal Layout)
+// --------------------------------------------------------------------------
+
+.form-row {
+  display: flex;
+  gap: $spacing-4;
+
+  @include respond-below('md') {
+    flex-direction: column;
+  }
+
+  .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Form Actions
+// --------------------------------------------------------------------------
+
+.form-actions {
+  @include flex-row($spacing-3);
+  margin-top: $spacing-3;
+  padding-top: $spacing-6;
+
+  &--end {
+    justify-content: flex-end;
+  }
+
+  &--between {
+    justify-content: space-between;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Multi-Select Dropdown (for assignee picker)
+// --------------------------------------------------------------------------
+
+.form-view__multi-select {
+  position: relative;
+  width: 100%;
+}
+
+.form-view__multi-select-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: $spacing-2 $spacing-3;
+  background: $color-primary-dark;
+  border: 1px solid color.adjust($color-secondary, $lightness: 5%);
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  outline: none;
+  @include transition((border-color, box-shadow));
+
+  &:hover {
+    border-color: $color-secondary-light;
+  }
+
+  &:focus {
+    border-color: $color-secondary-light;
+    box-shadow: 0 0 0 3px alpha($color-secondary-light, 0.2);
+  }
+}
+
+.form-view__placeholder {
+  color: $color-gray-500;
+  font-size: $font-size-sm;
+}
+
+.form-view__selected-avatars {
+  display: flex;
+  align-items: center;
+  gap: -$spacing-1;
+}
+
+.form-view__more-count {
+  font-size: $font-size-xs;
+  color: $color-gray-400;
+  margin-left: $spacing-2;
+}
+
+.form-view__multi-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: $z-index-dropdown;
+  margin-top: $spacing-1;
+  padding: $spacing-1;
+  background: $color-secondary-dark;
+  border: 1px solid alpha($color-gray-900, 0.2);
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.form-view__multi-select-option {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  font-family: $font-family-sans;
+  font-size: $font-size-sm;
+  color: $color-gray-200;
+  text-align: left;
+  @include transition((background-color, color));
+
+  &:hover {
+    background: rgba($color-primary, 0.15);
+  }
+
+  &--selected {
+    background: rgba($color-primary, 0.2);
+    color: $color-white;
+  }
+}
+
+.form-view__option-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.form-view__check-icon {
+  color: $color-success;
+  flex-shrink: 0;
+}
+
+.form-view__no-members {
+  padding: $spacing-3;
+  text-align: center;
+  color: $color-gray-500;
+  font-size: $font-size-sm;
+}

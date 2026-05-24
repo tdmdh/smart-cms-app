@@ -1,0 +1,101 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+
+.dashboard-page {
+    height: 100%;
+    &__header {
+        margin: $spacing-2 0 $spacing-2;
+        display: flex;
+        align-items: baseline;
+        justify-content: left;
+        gap: $spacing-2;
+    }
+
+    &__title {
+        font-size: $font-size-5xl;
+        font-family: $font-family-heading;
+        font-weight: $font-weight-bold;
+        color: $text-dark-muted;
+        margin-bottom: $spacing-1;
+    }
+
+    &__description {
+        font-size: $font-size-base;
+        font-family: $font-family-sans;
+        color: $color-gray-400;
+    }
+}
+
+// ==========================================================================
+// DASHBOARD LIST (shared wrapper)
+// ==========================================================================
+
+.dashboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    position: relative;
+}
+
+// ==========================================================================
+// BULK ACTION BAR
+// ==========================================================================
+
+.bulk-action-bar {
+    position: fixed;
+    bottom: $spacing-6;
+    left: 42%;
+    transform: translateX(50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    padding: $spacing-2;
+    background: alpha($color-gray-900, 0.1);
+    border: 1px solid alpha($color-gray-900, 0.2);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-radius: $border-radius-5xl;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    &__info {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+    }
+
+    &__checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: $border-radius-full;
+        background: rgba($color-primary, 0.15);
+        border: 1px solid rgba($color-primary, 0.3);
+        color: $color-primary;
+        cursor: pointer;
+        @include transition((background-color, border-color));
+
+        &:hover {
+            background: rgba($color-primary, 0.25);
+        }
+    }
+
+    &__count {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        white-space: nowrap;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        padding-left: $spacing-3;
+        border-left: 1px solid alpha($color-white, 0.1);
+    }
+}

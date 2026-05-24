@@ -1,0 +1,86 @@
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+
+// --------------------------------------------------------------------------
+// Header
+// --------------------------------------------------------------------------
+
+.header {
+    // Sticky within main content, not fixed to viewport
+    position: sticky;
+    top: 0;
+    // height: var(--header-height);
+    z-index: z('sticky');
+    flex-shrink: 0; // Don't shrink in flex layout
+    
+    // Smooth transition for auto-hide
+    transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    // Hidden state (auto-hide) - slide up and collapse
+    &.is-hidden {
+        transform: translateY(-100%);
+        margin-top: calc(var(--header-height) * -1);
+    }
+    
+    
+    &__wrapper {
+        @include flex-between;
+        width: 100%;
+        padding: $spacing-4;
+        margin: $spacing-2;
+        -webkit-backdrop-filter: blur(24px) saturate(1.8);
+        backdrop-filter: blur(24px) saturate(1.8);
+        margin-left: $spacing-0;
+        background-color: alpha($color-gray-900, 0.1);
+        border: 1px solid alpha($color-gray-900, 0.2);
+        border-radius: $border-radius-5xl;
+        corner-shape: superellipse(1.2);
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    &__left {
+        @include flex-row($spacing-3);
+    }
+
+    &__center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__right {
+        @include flex-row($spacing-3);
+    }
+
+    &__logo {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        text-decoration: none;
+        @include flex-row($spacing-2);
+
+        img,
+        svg {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &__search {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    &__nav {
+        @include flex-row($spacing-1);
+    }
+
+    &__user {
+        @include flex-row($spacing-2);
+    }
+}

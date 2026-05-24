@@ -1,0 +1,456 @@
+// ==========================================================================
+// SIDEBAR VIEW COMPONENT
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    transition:
+        transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+        width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+        max-width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+        min-width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    &.is-hidden {
+        transform: translateX(-100%);
+        width: 0;
+        min-width: 0;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-3;
+        flex-shrink: 0;
+    }
+
+    &__header-left {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+    }
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    &__back,
+    &__close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: transparent;
+        border-radius: $border-radius-full;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: rgba($color-primary, 0.1);
+            color: var(--text-primary);
+        }
+    }
+
+    &__body {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+    }
+
+    &__content {
+        height: 100%;
+        overflow-y: auto;
+        @include custom-scrollbar;
+    }
+
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    &__spinner {
+        width: 24px;
+        height: 24px;
+        border: 2px solid rgba($color-primary, 0.2);
+        border-top-color: $color-primary;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    &__menu {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    &__inline-textarea {
+        resize: none;
+        line-height: $line-height-snug;
+        font-size: $font-size-xs;
+    }
+
+    &__menu-item {
+        display: flex;
+        align-items: center;
+        // gap: $spacing-3;
+        padding: $spacing-2 $spacing-3;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: calc($border-radius-5xl - $spacing-2 * 0.75);
+        corner-shape: superellipse(1.2);
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        transform-origin: left;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease,
+            padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+            gap 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+        &:hover {
+            background-color: rgba($color-primary, 0.08);
+            color: var(--text-primary);
+
+            .sidebar-view__menu-icon {
+                color: $color-primary;
+            }
+
+            .sidebar-view__menu-arrow {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__menu-icon {
+        display: flex;
+        flex-shrink: 0;
+        margin-right: $spacing-3;
+    }
+
+    &__menu-label {
+        flex: 1;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+    }
+
+    &__menu-arrow {
+        opacity: 0.5;
+        margin-left: auto;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-4;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+
+        label {
+            font-size: $font-size-xs;
+            font-weight: $font-weight-medium;
+            color: var(--text-secondary);
+        }
+
+        input,
+        textarea {
+            padding: $spacing-2 $spacing-3;
+            border: 1px solid rgba($color-gray-500, 0.3);
+            border-radius: $border-radius-md;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: $font-size-sm;
+            font-family: inherit;
+            resize: vertical;
+
+            &:focus {
+                outline: none;
+                border-color: $color-primary;
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Menu item row — wraps the item button + edit/delete icon buttons
+    // ------------------------------------------------------------------
+    &__menu-item-row {
+        display: flex;
+        align-items: center;
+        border-radius: calc($border-radius-5xl - $spacing-2 * 0.75);
+        position: relative;
+        gap: $spacing-2;
+
+        &:hover {
+            .sidebar-view__menu-item-actions {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        &--active {
+            .sidebar-view__menu-item-actions {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    &__menu-item--row {
+        flex: 1;        
+    }
+
+    &__menu-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex-shrink: 0;
+        padding-right: $spacing-2;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+    }
+
+    &__icon-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border: none;
+        background: transparent;
+        border-radius: $border-radius-lg;
+        corner-shape: superellipse(1.2);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background-color: rgba($color-primary, 0.12);
+            color: var(--text-primary);
+        }
+
+        &--danger {
+            &:hover {
+                background-color: rgba($color-error, 0.12);
+                color: $color-error;
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Inline form (create / rename)
+    // ------------------------------------------------------------------
+    &__inline-form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+        padding: $spacing-2 $spacing-3;
+    }
+
+    &__inline-input {
+        width: 100%;
+        padding: $spacing-2 $spacing-3;
+        border: 1px solid rgba($color-primary, 0.35);
+        corner-shape: superellipse(1.2);
+        border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+        background: rgba($color-primary, 0.05);
+        color: var(--text-primary);
+        font-size: $font-size-sm;
+        font-family: inherit;
+        transition: border-color 0.15s ease;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+
+    &__inline-actions {
+        display: flex;
+        gap: $spacing-2;
+    }
+
+    &__inline-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-1;
+        padding: $spacing-1 $spacing-3;
+        border: none;
+        corner-shape: superellipse(1.2);
+        border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium;
+        font-family: inherit;
+        cursor: pointer;
+        transition: background-color 0.15s ease, opacity 0.15s ease;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &--confirm {
+            background-color: rgba($color-primary, 0.2);
+            color: $color-primary-light;
+
+            &:hover:not(:disabled) {
+                background-color: rgba($color-primary, 0.3);
+            }
+        }
+
+        &--cancel {
+            background-color: rgba($color-gray-500, 0.15);
+            color: var(--text-secondary);
+
+            &:hover:not(:disabled) {
+                background-color: rgba($color-gray-500, 0.25);
+                color: var(--text-primary);
+            }
+        }
+
+        &--danger {
+            background-color: rgba($color-error, 0.15);
+            color: $color-error;
+
+            &:hover:not(:disabled) {
+                background-color: rgba($color-error, 0.25);
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Delete confirmation
+    // ------------------------------------------------------------------
+    &__delete-confirm {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+        padding: $spacing-2 $spacing-3;
+        border-radius: calc($border-radius-5xl - $spacing-2 * 0.75);
+        background-color: rgba($color-error, 0.06);
+    }
+
+    &__delete-label {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    // ------------------------------------------------------------------
+    // Spinning loader icon
+    // ------------------------------------------------------------------
+    &__spinning {
+        animation: sidebar-view-spin 0.7s linear infinite;
+    }
+
+    @keyframes sidebar-view-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Divider
+    // ------------------------------------------------------------------
+    &__divider {
+        height: 1px;
+        background: rgba($color-gray-500, 0.15);
+        margin: $spacing-1 $spacing-3;
+    }
+
+    // ------------------------------------------------------------------
+    // Empty / error / loading states
+    // ------------------------------------------------------------------
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-3;
+        padding: $spacing-8 $spacing-4;
+        color: var(--text-secondary);
+        font-size: $font-size-sm;
+        opacity: 0.6;
+    }
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-3;
+        padding: $spacing-6 $spacing-4;
+        color: var(--text-secondary);
+        font-size: $font-size-sm;
+    }
+
+    &__loading-spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba($color-primary, 0.2);
+        border-top-color: $color-primary;
+        border-radius: 50%;
+        animation: sidebar-view-spin 0.8s linear infinite;
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-6 $spacing-4;
+        color: $color-error;
+        font-size: $font-size-sm;
+        opacity: 0.8;
+    }
+
+    &__menu-item--active {
+        background-color: rgba($color-primary, 0.1);
+        color: $color-primary-light;
+
+        .sidebar-view__menu-icon {
+            color: $color-primary-light;
+        }
+    }
+
+    &__menu-item--action {
+        color: var(--text-secondary);
+        opacity: 0.75;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

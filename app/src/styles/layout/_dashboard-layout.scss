@@ -1,0 +1,59 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+:root {
+    --header-height: #{$header-height};
+}
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+
+    &__main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        // Main content fills remaining space naturally via flexbox
+        // No fixed margin-left needed since sidebar uses fit-content
+
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        @include respond-below('lg') {
+            margin-left: 0;
+        }
+
+        &.sidebar-hidden {
+            margin-left: 0;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        padding: $spacing-2;
+        padding-top: 0;
+        padding-bottom: $spacing-2;
+        // No margin-top needed - header is now in document flow
+        overflow-y: auto;
+        @include custom-scrollbar;
+    }
+}
+
+.sidebar-overlay {
+    @include fixed-full;
+    background: rgba($color-black, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    z-index: z('modal-backdrop');
+    @include transition((opacity, visibility));
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @include respond-to('lg') {
+        display: none;
+    }
+}

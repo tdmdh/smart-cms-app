@@ -1,0 +1,173 @@
+// =============================================================================
+// CLIENT SETTINGS STYLES
+// =============================================================================
+// Settings page with form sections, visual grouping, and prominent danger zone.
+// =============================================================================
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+.client-settings {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+
+    // -------------------------------------------------------------------------
+    // Header Section
+    // -------------------------------------------------------------------------
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: $spacing-3;
+
+        &--left {
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+        }
+
+        &--actions {
+            display: flex;
+            gap: $spacing-2;
+            background-color: alpha($color-gray-900, 0.1);
+            border: 0.5px solid alpha($color-gray-900, 0.2);
+            border-radius: $border-radius-7xl;
+            padding: $spacing-1;
+        }
+    }
+
+    &__stats {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        background-color: alpha($color-gray-900, 0.1);
+        border: 0.5px solid alpha($color-gray-900, 0.2);
+        border-radius: $border-radius-7xl;
+        padding: $spacing-1;
+    }
+
+    &__stat {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+        padding: $spacing-1 $spacing-2;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        border-radius: $border-radius-full;
+        background: var(--surface-tertiary);
+        color: var(--text-secondary);
+
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Settings Sections
+    // -------------------------------------------------------------------------
+
+    &__section {
+        position: relative;
+        overflow: hidden;
+
+        // Subtle gradient accent on left edge
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg,
+                    $color-primary 0%,
+                    $color-primary-light 100%);
+            opacity: 0.6;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Danger Zone
+    // -------------------------------------------------------------------------
+
+    &__danger-description {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+        margin: 0 0 $spacing-4;
+        line-height: $line-height-relaxed;
+    }
+
+    &__danger-action {
+        margin-top: $spacing-3;
+    }
+
+    // -------------------------------------------------------------------------
+    // Form Enhancements
+    // -------------------------------------------------------------------------
+
+    .form {
+        &__group {
+            margin-bottom: $spacing-4;
+        }
+    }
+
+    // Save indicator animation
+    &__save-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-sm;
+        color: $color-success;
+        animation: fadeIn 0.3s ease-out;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+// Danger Alert Customization (when inside settings)
+.client-settings {
+    .alert--error {
+        background: alpha($color-error, 0.05);
+        border-color: alpha($color-error, 0.2);
+
+        .alert__icon {
+            color: $color-error;
+        }
+
+        .alert__title {
+            color: $color-error;
+        }
+    }
+}
+
+// -------------------------------------------------------------------------
+// Animations
+// -------------------------------------------------------------------------
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .client-settings {
+        &__save-indicator {
+            animation: none;
+        }
+    }
+}

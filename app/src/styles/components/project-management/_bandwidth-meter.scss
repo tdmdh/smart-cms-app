@@ -1,0 +1,102 @@
+.bandwidth-meter {
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 280px;
+
+    &__title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-text-secondary, #64748b);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__member {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__member-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    &__username {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-text, #1a202c);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__badges {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    &__dwp-badge {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: var(--color-warning-text, #92400e);
+        background: var(--color-warning-bg, #fef3c7);
+        border-radius: 4px;
+        padding: 1px 5px;
+        white-space: nowrap;
+    }
+
+    &__cw-value {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary, #64748b);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__bar-track {
+        height: 6px;
+        background: var(--color-surface-alt, #f1f5f9);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    &__bar-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.4s ease;
+    }
+
+    &__empty {
+        font-size: 0.8125rem;
+        color: var(--color-text-secondary, #64748b);
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    &--loading {
+        .bandwidth-meter__skeleton {
+            height: 80px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+    }
+}
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

@@ -1,0 +1,350 @@
+// =============================================================================
+// CLIENT TEAM STYLES
+// =============================================================================
+// Enhanced team management with role hierarchy visualization, improved member
+// cards, and better action visibility.
+// =============================================================================
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+.client-members {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+
+    // -------------------------------------------------------------------------
+    // Header Section
+    // -------------------------------------------------------------------------
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: $spacing-3;
+
+        &--left {
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+        }
+
+        &--actions {
+            display: flex;
+            gap: $spacing-2;
+            background-color: alpha($color-gray-900, 0.1);
+            border: 0.5px solid alpha($color-gray-900, 0.2);
+            border-radius: $border-radius-7xl;
+            padding: $spacing-1;
+        }
+    }
+
+    &__stats {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        background-color: alpha($color-gray-900, 0.1);
+        border: 0.5px solid alpha($color-gray-900, 0.2);
+        border-radius: $border-radius-7xl;
+        padding: $spacing-1;
+    }
+
+    &__stat {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+        padding: $spacing-1 $spacing-2;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        border-radius: $border-radius-full;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &--info {
+            background: alpha($color-info, 0.15);
+            color: $color-info;
+        }
+
+        &--warning {
+            background: alpha($color-warning, 0.15);
+            color: $color-warning;
+        }
+
+        &--default {
+            background: var(--surface-tertiary);
+            color: var(--text-secondary);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Members List
+    // -------------------------------------------------------------------------
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+    }
+
+    &__member {
+        transition:
+            transform $transition-duration-fast $transition-timing-ease-out,
+            box-shadow $transition-duration-fast $transition-timing-ease-out,
+            border-color $transition-duration-fast;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: $shadow-sm;
+            border-color: alpha($color-gray-500, 0.3);
+
+            .client-members__member-actions {
+                opacity: 1;
+            }
+        }
+
+        // Card body layout
+        .card__body {
+            display: flex;
+            align-items: center;
+            gap: $spacing-3;
+        }
+    }
+
+    &__member-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-0;
+    }
+
+    &__member-name {
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__member-email {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__member-role {
+        flex-shrink: 0;
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: $spacing-1;
+            text-transform: capitalize;
+
+            svg {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    }
+
+    &__member-joined {
+        flex-shrink: 0;
+
+        @media (max-width: $breakpoint-sm) {
+            display: none;
+        }
+    }
+
+    &__member-actions {
+        flex-shrink: 0;
+        opacity: 0.5;
+        transition: opacity $transition-duration-fast;
+
+        @media (max-width: $breakpoint-md) {
+            opacity: 1;
+        }
+    }
+
+    &__member-skeleton {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+    }
+
+    &__member-skeleton-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    // -------------------------------------------------------------------------
+    // Empty State
+    // -------------------------------------------------------------------------
+
+    &__empty {
+        text-align: center;
+        padding: $spacing-8;
+        color: var(--text-secondary);
+
+        svg {
+            color: var(--text-tertiary);
+            margin-bottom: $spacing-4;
+        }
+
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            color: var(--text-primary);
+            margin: 0 0 $spacing-2;
+        }
+
+        p {
+            margin: 0 0 $spacing-4;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Loading & Error States
+    // -------------------------------------------------------------------------
+
+    &__loading,
+    &__error {
+        padding: $spacing-6;
+        text-align: center;
+        color: var(--text-secondary);
+    }
+}
+
+// =============================================================================
+// EMPTY STATE COMPONENT
+// =============================================================================
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-12;
+    text-align: center;
+
+    &__icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: alpha($color-gray-700, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-tertiary);
+        margin-bottom: $spacing-4;
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin: 0 0 $spacing-2;
+    }
+
+    &__description {
+        color: var(--text-secondary);
+        max-width: 400px;
+        margin: 0 0 $spacing-6;
+    }
+}
+
+// =============================================================================
+// STATS GRID (Shared Component)
+// =============================================================================
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: $spacing-4;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-6;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    text-align: center;
+    color: var(--text-secondary);
+    transition:
+        transform $transition-duration-fast,
+        box-shadow $transition-duration-fast;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-sm;
+    }
+
+    svg {
+        color: $color-primary-light;
+    }
+
+    &__value {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        margin: $spacing-2 0;
+    }
+
+    &__label {
+        font-size: $font-size-sm;
+    }
+}
+
+// =============================================================================
+// PULSE ANIMATION
+// =============================================================================
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .client-members {
+        &__member {
+            transition: none;
+
+            &:hover {
+                transform: none;
+            }
+        }
+
+        &__member-actions {
+            opacity: 1;
+            transition: none;
+        }
+    }
+
+    .stat-card {
+        transition: none;
+
+        &:hover {
+            transform: none;
+        }
+    }
+}

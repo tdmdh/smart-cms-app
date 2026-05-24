@@ -1,0 +1,429 @@
+// =============================================================================
+// CLIENT OVERVIEW STYLES
+// =============================================================================
+// Redesigned overview page with enhanced stat cards, layered depth effects,
+// and improved visual hierarchy.
+// =============================================================================
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+.client-overview {
+    display: flex;
+    flex-direction: column;
+
+    // -------------------------------------------------------------------------
+    // Profile Card (Header)
+    // -------------------------------------------------------------------------
+
+    &__profile {
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    alpha($color-primary, 0.05) 0%,
+                    transparent 70%);
+            pointer-events: none;
+        }
+    }
+
+    &__profile-body {
+        display: flex;
+        align-items: center;
+        gap: $spacing-6;
+
+        @media (max-width: $breakpoint-md) {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    &__avatar {
+        width: 72px;
+        height: 72px;
+        flex-shrink: 0;
+    }
+
+    &__logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: $border-radius-lg;
+    }
+
+    &__info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        margin: 0 0 $spacing-2;
+    }
+
+    &__contact-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-4;
+
+        @media (max-width: $breakpoint-md) {
+            justify-content: center;
+        }
+    }
+
+    &__contact-item {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+
+        svg {
+            flex-shrink: 0;
+            color: $color-primary-light;
+        }
+    }
+
+    &__actions {
+        flex-shrink: 0;
+
+        @media (max-width: $breakpoint-md) {
+            margin-top: $spacing-4;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Stats Grid
+    // -------------------------------------------------------------------------
+
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-4;
+
+        @media (max-width: $breakpoint-md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: $breakpoint-sm) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__stat-card {
+        position: relative;
+        overflow: hidden;
+        transition:
+            transform $transition-duration-fast $transition-timing-ease-out,
+            box-shadow $transition-duration-fast $transition-timing-ease-out;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-md;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, $color-primary, $color-primary-light);
+            opacity: 0;
+            transition: opacity $transition-duration-fast;
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
+    }
+
+    &__stat-body {
+        display: flex;
+        align-items: center;
+        gap: $spacing-4;
+    }
+
+    &__stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: $border-radius-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        &--primary {
+            background: alpha($color-primary, 0.15);
+            color: $color-primary-light;
+        }
+
+        &--info {
+            background: alpha($color-info, 0.15);
+            color: $color-info;
+        }
+
+        &--success {
+            background: alpha($color-success, 0.15);
+            color: $color-success;
+        }
+
+        &--warning {
+            background: alpha($color-warning, 0.15);
+            color: $color-warning;
+        }
+    }
+
+    &__stat-content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    &__stat-value {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        line-height: $line-height-tight;
+    }
+
+    &__stat-label {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+
+    // -------------------------------------------------------------------------
+    // Content Grid (Projects & Team)
+    // -------------------------------------------------------------------------
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-4;
+
+        @media (max-width: $breakpoint-lg) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Projects List
+    // -------------------------------------------------------------------------
+
+    &__projects {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+    }
+
+    &__project-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        padding: $spacing-3;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: $border-radius-lg;
+        text-decoration: none;
+        color: inherit;
+        transition:
+            border-color $transition-duration-fast,
+            background-color $transition-duration-fast,
+            transform $transition-duration-fast;
+
+        &:hover {
+            border-color: alpha($color-primary, 0.3);
+            background: alpha($color-primary, 0.02);
+            transform: translateX(4px);
+
+            .client-overview__project-arrow {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        svg:first-child {
+            color: $color-primary-light;
+            flex-shrink: 0;
+        }
+    }
+
+    &__project-name {
+        flex: 1;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__project-arrow {
+        color: var(--text-secondary);
+        opacity: 0;
+        transform: translateX(-4px);
+        transition:
+            opacity $transition-duration-fast,
+            transform $transition-duration-fast;
+    }
+
+    // -------------------------------------------------------------------------
+    // Team Section
+    // -------------------------------------------------------------------------
+
+    &__team {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+    }
+
+    &__team-member {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        padding: $spacing-2 0;
+    }
+
+    &__team-info {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-0;
+        min-width: 0;
+    }
+
+    &__team-name {
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__team-role {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+        text-transform: capitalize;
+    }
+
+    &__team-more {
+        display: inline-block;
+        padding: $spacing-2 0;
+        font-size: $font-size-sm;
+        color: $color-primary-light;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Notes Card
+    // -------------------------------------------------------------------------
+
+    &__notes-card {
+        grid-column: 1 / -1;
+    }
+
+    &__notes-content {
+        color: var(--text-secondary);
+        line-height: $line-height-relaxed;
+        white-space: pre-wrap;
+        margin: 0;
+    }
+
+    // -------------------------------------------------------------------------
+    // Empty State
+    // -------------------------------------------------------------------------
+
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-8;
+        text-align: center;
+        gap: $spacing-3;
+
+        svg {
+            color: var(--text-tertiary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: $font-size-sm;
+            margin: 0;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Quick Actions
+    // -------------------------------------------------------------------------
+
+    &__quick-actions {
+        position: sticky;
+        bottom: $spacing-4;
+        margin-top: auto;
+    }
+
+    &__quick-actions-body {
+        display: flex;
+        justify-content: center;
+        gap: $spacing-2;
+        padding: $spacing-3 !important;
+        background: alpha($bg-dark, 0.8);
+        backdrop-filter: blur(8px);
+        border-radius: $border-radius-3xl;
+
+        @media (max-width: $breakpoint-sm) {
+            flex-wrap: wrap;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Loading State
+    // -------------------------------------------------------------------------
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        gap: $spacing-4;
+    }
+
+    &__loading-content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    .client-overview {
+
+        &__stat-card,
+        &__project-item {
+            transition: none;
+
+            &:hover {
+                transform: none;
+            }
+        }
+
+        &__project-arrow {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+}

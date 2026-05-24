@@ -1,0 +1,246 @@
+// ==========================================================================
+// BUTTON COMPONENTS
+// ==========================================================================
+// Button styles and variants.
+// ==========================================================================
+
+@use 'sass:color';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Base Button
+// --------------------------------------------------------------------------
+
+.btn {
+    @extend %btn-base;
+
+
+    &--xs {
+        padding: $spacing-2 $spacing-4;
+        font-size: $font-size-xs;
+        gap: $spacing-1;
+    }
+
+    &--sm {
+        padding: $spacing-2 $spacing-3;
+        font-size: $font-size-sm;
+        gap: $spacing-1;
+    }
+
+    &--lg {
+        padding: $spacing-3 $spacing-6;
+        font-size: $font-size-base;
+        gap: $spacing-3;
+    }
+
+    &--xl {
+        padding: $spacing-4 $spacing-8;
+        font-size: $font-size-lg;
+        gap: $spacing-3;
+    }
+
+    &--block {
+        width: 100%;
+    }
+    &--rounded {
+        border-radius: $border-radius-full;
+    }
+
+    &--icon {
+        padding: $spacing-2;
+        gap: 0;
+        width: fit-content;
+
+    }   
+    
+}
+
+// --------------------------------------------------------------------------
+// Button Variants
+// --------------------------------------------------------------------------
+
+.btn-accent {
+    @extend .btn;
+    background-color: $color-accent-secondary;
+    color: $color-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-accent-secondary-dark;
+    }
+}
+.btn-primary {
+    @extend .btn;
+    background-color: $color-primary;
+    color: $color-white;
+
+    
+    &:hover:not(:disabled) {
+        background-color: $color-primary-dark;
+    }
+    
+    &:active:not(:disabled) {
+        background-color: color.adjust($color-primary-dark, $lightness: -5%);
+    }
+}
+
+.btn-secondary {
+    @extend .btn;
+    background-color: $color-secondary;
+    color: $color-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-secondary-dark;
+    }
+}
+
+.btn-outline {
+    @extend .btn;
+    background: transparent;
+    border: 1px solid $color-gray-800;
+    color: var(--text-primary);
+
+    &:hover:not(:disabled) {
+        background-color: $color-gray-800;
+        border: 1px solid $color-gray-800;
+    }
+}
+
+.btn-ghost {
+    @extend .btn;
+    color: $color-gray-400;
+    border: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        background-color: var(--bg-surface);
+        color: var(--text-primary);
+    }
+
+    
+}
+
+.btn-danger {
+    @extend .btn;
+    background-color: $color-error;
+    color: $color-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-error-dark;
+    }
+}
+
+.btn-success {
+    @extend .btn;
+    background-color: $color-success;
+    color: $color-white;
+
+    &:hover:not(:disabled) {
+        background-color: $color-success-dark;
+    }
+}
+
+
+.btn-link {
+    @extend .btn;
+    background: transparent;
+    border: none;
+    color: $color-primary-light;
+    padding: 0;
+    gap: 0;
+    box-shadow: none;
+    text-underline-offset: 4px;
+    gap: $spacing-2;
+
+    &:hover:not(:disabled) {
+        text-decoration: underline;
+        background: transparent;
+        color: $color-primary-dark;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Button Group
+// --------------------------------------------------------------------------
+
+.btn-group {
+    display: inline-flex;
+
+    .btn {
+        border-radius: 0;
+
+        &:first-child {
+            border-radius: $border-radius-lg 0 0 $border-radius-lg;
+        }
+
+        &:last-child {
+            border-radius: 0 $border-radius-lg $border-radius-lg 0;
+        }
+
+        &:not(:last-child) {
+            border-right: 1px solid rgba($color-white, 0.2);
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Loading State
+// --------------------------------------------------------------------------
+
+.btn--loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+
+    .btn__text {
+        visibility: hidden;
+    }
+}
+
+.btn__loading-dots {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-1;
+
+    .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: $academic-ice-blue;
+        animation: dotBounce 1.4s infinite ease-in-out both;
+
+        &:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        &:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: 0s;
+        }
+    }
+}
+
+@keyframes dotBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

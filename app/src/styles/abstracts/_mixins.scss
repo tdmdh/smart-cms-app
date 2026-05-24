@@ -1,0 +1,308 @@
+// ==========================================================================
+// MIXINS
+// ==========================================================================
+// Reusable style patterns.
+// ==========================================================================
+
+@use 'sass:map';
+@use 'sass:color';
+@use 'variables' as *;
+
+// --------------------------------------------------------------------------
+// Responsive Breakpoints
+// --------------------------------------------------------------------------
+
+/// Responsive breakpoint mixin
+/// @param {String} $breakpoint - Breakpoint name from $breakpoints map
+@mixin respond-to($breakpoint) {
+    @if map.has-key($breakpoints, $breakpoint) {
+        @media (min-width: map.get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Unknown breakpoint: #{$breakpoint}";
+    }
+}
+
+/// Below breakpoint mixin
+/// @param {String} $breakpoint - Breakpoint name from $breakpoints map
+@mixin respond-below($breakpoint) {
+    @if map.has-key($breakpoints, $breakpoint) {
+        @media (max-width: map.get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Unknown breakpoint: #{$breakpoint}";
+    }
+}
+
+/// Between breakpoints mixin
+@mixin respond-between($lower, $upper) {
+    @if map.has-key($breakpoints, $lower) and map.has-key($breakpoints, $upper) {
+        @media (min-width: map.get($breakpoints, $lower)) and (max-width: map.get($breakpoints, $upper)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Unknown breakpoint: #{$lower} or #{$upper}";
+    }
+}
+
+// --------------------------------------------------------------------------
+// Flexbox
+// --------------------------------------------------------------------------
+
+/// Flexbox center mixin
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/// Flexbox column center mixin
+@mixin flex-center-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/// Flexbox space between mixin
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/// Flexbox stack mixin
+@mixin flex-stack($gap: $spacing-4) {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+}
+
+/// Flexbox row mixin
+@mixin flex-row($gap: $spacing-4) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin flex-col($gap: $spacing-4) {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+}
+
+// --------------------------------------------------------------------------
+// Grid
+// --------------------------------------------------------------------------
+
+/// Auto-fit grid mixin
+@mixin grid-auto-fit($min-width: 250px, $gap: $spacing-4) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+    gap: $gap;
+}
+
+/// Auto-fill grid mixin
+@mixin grid-auto-fill($min-width: 250px, $gap: $spacing-4) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+    gap: $gap;
+}
+
+
+// --------------------------------------------------------------------------
+// Typography
+// --------------------------------------------------------------------------
+
+/// Text truncate with ellipsis
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/// Multi-line text truncate
+@mixin text-clamp($lines: 2) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/// Heading styles
+@mixin heading($size: $font-size-2xl) {
+    font-family: $font-family-heading;
+    font-size: $size;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    letter-spacing: $letter-spacing-tight;
+}
+
+// --------------------------------------------------------------------------
+// Effects
+// --------------------------------------------------------------------------
+
+/// Smooth transition mixin
+@mixin transition($properties: all, $duration: $transition-duration-fast, $timing: $transition-timing-ease-in-out) {
+    transition: $properties $duration $timing;
+}
+
+/// Hover lift effect
+@mixin hover-lift($y: -4px) {
+    @include transition(transform);
+
+    &:hover {
+        transform: translateY($y);
+    }
+}
+
+/// Focus ring for accessibility
+@mixin focus-ring($color: $color-primary, $offset: 2px, $width: 2px) {
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 $offset $bg-light, 0 0 0 ($offset + $width) $color;
+    }
+}
+
+/// Card shadow hover effect
+@mixin card-hover {
+    @include transition((box-shadow, transform));
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+    }
+}
+
+// --------------------------------------------------------------------------
+// Positioning
+// --------------------------------------------------------------------------
+
+/// Absolute center
+@mixin absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/// Absolute fill
+@mixin absolute-fill {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+/// Fixed full screen
+@mixin fixed-full {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+// --------------------------------------------------------------------------
+// Visual
+// --------------------------------------------------------------------------
+
+/// Backdrop blur overlay
+@mixin backdrop-blur($blur: 8px) {
+    backdrop-filter: blur($blur);
+    -webkit-backdrop-filter: blur($blur);
+}
+
+/// Glass morphism effect
+@mixin glass($blur: 12px, $opacity: 0.8) {
+    background: rgba($color-white, $opacity);
+    @include backdrop-blur($blur);
+    border: 1px solid rgba($color-white, 0.2);
+}
+
+/// Dark glass morphism effect
+@mixin glass-dark($blur: 8px, $opacity: 0.8) {
+    background: rgba($color-gray-900, $opacity);
+    @include backdrop-blur($blur);
+}
+
+/// Gradient text
+@mixin gradient-text($gradient) {
+    background: $gradient;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// --------------------------------------------------------------------------
+// Accessibility
+// --------------------------------------------------------------------------
+
+/// Visually hidden but accessible
+@mixin sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/// Reduced motion support
+@mixin reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+        @content;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Scrollbar
+// --------------------------------------------------------------------------
+
+/// Custom scrollbar
+@mixin custom-scrollbar($width: 8px, $track: $color-gray-200, $thumb: $color-gray-400) {
+    scrollbar-width: thin;
+    scrollbar-color: $thumb $track;
+
+    &::-webkit-scrollbar {
+        width: $width;
+        height: $width;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $track;
+        border-radius: $border-radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $thumb;
+        border-radius: $border-radius-full;
+
+        &:hover {
+            background: color.adjust($thumb, $lightness: -10%);
+        }
+    }
+}
+
+/// Hide scrollbar but keep functionality
+@mixin hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -1,0 +1,301 @@
+// ==========================================================================
+// BADGE COMPONENTS
+// ==========================================================================
+// Badge and tag styles.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Badge
+// --------------------------------------------------------------------------
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: 0.125em 0.625em;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    line-height: 1.5;
+    border-radius: $border-radius-md;
+    corner-shape: superellipse(1.2);
+    white-space: nowrap;
+
+    // Default (gray)
+    background-color: $color-gray-100;
+    color: $color-gray-700;
+
+    .dark & {
+        background-color: $color-gray-800;
+        color: $color-gray-300;
+    }
+
+    // ── Sizes ─────────────────────────────────────────────────────────────
+    &--xs {
+        padding: 0 0.25em;
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    &--sm {
+        padding: 0.0625em 0.375em;
+        font-size: 10px;
+    }
+
+    &--lg {
+        padding: 0.25em 0.75em;
+        font-size: $font-size-sm;
+    }
+
+    // ── Shapes ────────────────────────────────────────────────────────────
+    &--pill {
+        border-radius: $border-radius-full;
+    }
+
+    &--outline {
+        background: transparent;
+        border: 1px solid currentColor;
+    }
+
+    // ── Dot indicator ─────────────────────────────────────────────────────
+    &--dot {
+        &::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+    }
+
+    // ── Removable ─────────────────────────────────────────────────────────
+    &--removable {
+        padding-right: $spacing-1;
+    }
+
+    &__remove {
+        @extend %reset-button;
+        @include flex-center;
+        width: 16px;
+        height: 16px;
+        margin-left: $spacing-1;
+        border-radius: $border-radius-sm;
+        opacity: 0.6;
+        @include transition(opacity);
+
+        &:hover {
+            opacity: 1;
+        }
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+
+    // ── Icon ──────────────────────────────────────────────────────────────
+    &__icon {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        svg {
+            width: 1em;
+            height: 1em;
+        }
+    }
+
+    &__icon--spin svg {
+        animation: badge-spin 1s linear infinite;
+    }
+
+    // ── Variant colours (BEM modifiers) ───────────────────────────────────
+
+    &--default {
+        background-color: $color-gray-100;
+        color: $color-gray-700;
+
+        .dark & {
+            background-color: $color-gray-800;
+            color: $color-gray-300;
+        }
+    }
+
+    &--primary {
+        background-color: alpha($color-primary, 0.1);
+        color: $color-primary;
+    }
+
+    &--secondary {
+        background-color: alpha($color-secondary, 0.1);
+        color: $color-secondary;
+    }
+
+    &--success {
+        background-color: alpha($color-success, 0.1);
+        color: $color-success-dark;
+    }
+
+    &--warning {
+        background-color: alpha($color-warning, 0.1);
+        color: $color-warning-dark;
+    }
+
+    &--danger,
+    &--error {
+        background-color: alpha($color-error, 0.1);
+        color: $color-error-dark;
+    }
+
+    &--info {
+        background-color: alpha($color-info, 0.1);
+        color: $color-info-dark;
+    }
+
+    // ── Solid variants ────────────────────────────────────────────────────
+
+    &--primary-solid {
+        background-color: $color-primary;
+        color: $color-white;
+    }
+
+    &--success-solid {
+        background-color: $color-success;
+        color: $color-white;
+    }
+
+    &--warning-solid {
+        background-color: $color-warning;
+        color: $color-white;
+    }
+
+    &--danger-solid,
+    &--error-solid {
+        background-color: $color-error;
+        color: $color-white;
+    }
+
+    &--info-solid {
+        background-color: $color-info;
+        color: $color-white;
+    }
+}
+
+// ── Legacy class-based variants (backward compat) ─────────────────────────
+// These map the old `.badge-primary` pattern to the same styles via @extend.
+
+.badge-primary {
+    @extend .badge--primary;
+}
+
+.badge-secondary {
+    @extend .badge--secondary;
+}
+
+.badge-success {
+    @extend .badge--success;
+}
+
+.badge-warning {
+    @extend .badge--warning;
+}
+
+.badge-error {
+    @extend .badge--danger;
+}
+
+.badge-info {
+    @extend .badge--info;
+}
+
+.badge-primary-solid {
+    @extend .badge--primary-solid;
+}
+
+.badge-success-solid {
+    @extend .badge--success-solid;
+}
+
+.badge-warning-solid {
+    @extend .badge--warning-solid;
+}
+
+.badge-error-solid {
+    @extend .badge--danger-solid;
+}
+
+// --------------------------------------------------------------------------
+// Status Dot
+// --------------------------------------------------------------------------
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $color-gray-400;
+
+    &--online,
+    &--active,
+    &--success {
+        background-color: $color-success;
+    }
+
+    &--offline,
+    &--inactive {
+        background-color: $color-gray-400;
+    }
+
+    &--busy,
+    &--error {
+        background-color: $color-error;
+    }
+
+    &--away,
+    &--warning {
+        background-color: $color-warning;
+    }
+
+    // Animated pulse
+    &--pulse {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: inherit;
+            animation: status-pulse 2s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes status-pulse {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(1.5);
+    }
+}
+
+@keyframes badge-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

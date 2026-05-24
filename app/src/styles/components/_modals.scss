@@ -1,0 +1,181 @@
+// ==========================================================================
+// MODAL COMPONENTS
+// ==========================================================================
+// Modal and dialog styles.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Modal Overlay
+// --------------------------------------------------------------------------
+
+.modal-overlay {
+    @extend %overlay;
+    @include flex-center;
+    padding: $spacing-2;
+    opacity: 0;
+    visibility: hidden;
+    @include transition((opacity, visibility));
+
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Modal
+// --------------------------------------------------------------------------
+
+.modal {
+    background: alpha($color-gray-900, 0.08);
+    border: 1px solid alpha($color-gray-700, 0.18);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    backdrop-filter: blur(24px) saturate(1.8);
+    border-radius: $border-radius-5xl;
+    corner-shape: superellipse(1.2);
+    box-shadow: $shadow-2xl;
+    width: 100%;
+    max-width: 500px;
+    max-height: calc(100vh - #{$spacing-8});
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(10px);
+    @include transition(transform);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba($color-white, 0.025) 0%,
+            transparent 60%
+        );
+        pointer-events: none;
+        border-radius: inherit;
+    }
+
+    .modal-overlay.is-open & {
+        transform: scale(1) translateY(0);
+    }
+
+    &--sm {
+        max-width: 380px;
+    }
+
+    &--lg {
+        max-width: 700px;
+    }
+
+    &--xl {
+        max-width: 900px;
+    }
+
+    &--full {
+        max-width: calc(100vw - #{$spacing-8});
+        max-height: calc(100vh - #{$spacing-8});
+    }
+
+    &__header {
+        @include flex-between;
+        padding:$spacing-3 $spacing-3 $spacing-2 $spacing-6;
+    }
+    
+    &__title {
+        @include flex-center;
+        gap: $spacing-2;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        font-family: $font-family-sans;
+        color: $color-gray-100;
+        line-height: 1;
+    }
+
+    &__close {
+        @extend %reset-button;
+        width: 32px;
+        height: 32px;
+        @include flex-center;
+        border-radius: $border-radius-lg;
+        color: $color-gray-100;
+        @include transition((background-color, color));
+
+        &:hover {
+            background-color: $color-gray-700;
+            color: $color-gray-100;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__body {
+        flex: 1;
+        padding: $spacing-5;
+        overflow-y: auto;
+        @include custom-scrollbar;
+    }
+
+    &__footer {
+        @include flex-row($spacing-3);
+        justify-content: flex-end;
+        padding: $spacing-5;
+
+        &--between {
+            justify-content: space-between;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Confirm Dialog
+// --------------------------------------------------------------------------
+
+.confirm-dialog {
+    text-align: center;
+
+    &__icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto $spacing-4;
+
+        &--warning {
+            color: $color-warning;
+        }
+
+        &--danger {
+            color: $color-error;
+        }
+
+        &--success {
+            color: $color-success;
+        }
+
+        &--info {
+            color: $color-info;
+        }
+    }
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        margin-bottom: $spacing-2;
+    }
+
+    &__message {
+        color: var(--text-secondary);
+        margin-bottom: $spacing-6;
+    }
+
+    &__actions {
+        @include flex-center;
+        gap: $spacing-3;
+    }
+}

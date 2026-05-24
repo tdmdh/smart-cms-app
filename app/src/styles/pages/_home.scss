@@ -1,0 +1,144 @@
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+.page-home {
+
+    &__section {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        
+
+        &--with-gradient {
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 30%;
+                background: linear-gradient(to bottom,
+                        transparent 0%,
+                        $bg-dark 100%);
+                pointer-events: none;
+                z-index: 5;
+            }
+        }
+    }
+
+    &__content {
+
+        &__intro {
+            &--title {
+                font-size: $font-size-5xl;
+                font-family: $font-family-heading;
+                font-weight: $font-weight-extrabold;
+                color: $color-white;
+                margin: 0;
+                max-width: 750px;
+                letter-spacing: 1;
+            }
+
+            &--subtitle {
+                font-size: $font-size-xl;
+                font-family: $font-family-sans;
+                font-weight: $font-weight-medium;
+                color: $color-gray-400;
+                margin: 0;
+                max-width: 500px;
+                margin-left: $spacing-1;
+            }
+        }
+
+        &__aside {
+            &--card {
+
+                // Image placeholder
+                &--image {
+                    width: 500px;
+                    height: 500px;
+                    background-color: $color-gray-200;
+                    border-radius: $border-radius-5xl;
+                }
+            }
+        }
+
+        
+    }
+    
+    &__features {
+        display: flex;
+        flex-direction: row-reverse;
+        &__content {
+            &__mockup {
+                &--container {
+                    display: flex;
+                    gap: $spacing-8;
+                    align-items: center;
+                }
+
+                &--text {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-8;
+                    max-width: 500px;
+                }
+
+                &--text-section {
+                    cursor: pointer;
+                    
+                    &:hover {
+                        h3 {
+                            color: $color-primary;
+                        }
+
+                        p {
+                            color: $color-gray-300;
+                        }
+                    }
+
+                    &.active {
+                        h3 {
+                            color: $color-primary;
+                        }
+
+                        p {
+                            color: $color-gray-300;
+                        }
+                    }
+
+                    h3 {
+                        font-size: $font-size-4xl;
+                        font-family: $font-family-heading;
+                        font-weight: $font-weight-bold;
+                        margin: 0;
+                        transition: all 0.3s ease-in-out;
+                        color: $color-gray-600;
+                    }
+
+                    p {
+                        font-size: $font-size-sm;
+                        font-family: $font-family-sans;
+                        font-weight: $font-weight-normal;
+                        margin: 0;
+                        transition: all 0.3s ease-in-out;
+                        color: $color-gray-600;
+                    }
+                }
+
+                &--wrapper {
+                    max-width: 85%;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

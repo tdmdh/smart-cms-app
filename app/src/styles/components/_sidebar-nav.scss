@@ -1,0 +1,41 @@
+// ==========================================================================
+// SIDEBAR NAV COMPONENT
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-1;
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    &__section-title {
+        padding: $spacing-1 $spacing-5;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        // text-transform: uppercase;
+        // letter-spacing: $letter-spacing-wider;
+        color: $text-dark-muted;
+        opacity: 0.7;
+        overflow: hidden;
+        white-space: nowrap;
+
+
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        // gap: $spacing-1;
+    }
+}

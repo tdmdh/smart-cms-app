@@ -1,0 +1,204 @@
+// ==========================================================================
+// TYPOGRAPHY
+// ==========================================================================
+// Base typography styles and heading definitions.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// --------------------------------------------------------------------------
+// Base Typography
+// --------------------------------------------------------------------------
+
+body {
+    font-family: $font-family-sans;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-normal;
+    color: $text-light;
+}
+
+// --------------------------------------------------------------------------
+// Headings
+// --------------------------------------------------------------------------
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-family-heading;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    letter-spacing: $letter-spacing-tight;
+    color: $text-light;
+}
+
+h1 {
+    font-size: $font-size-4xl;
+
+    @include respond-to('md') {
+        font-size: $font-size-5xl;
+    }
+}
+
+h2 {
+    font-size: $font-size-3xl;
+
+    @include respond-to('md') {
+        font-size: $font-size-4xl;
+    }
+}
+
+h3 {
+    font-size: $font-size-2xl;
+
+    @include respond-to('md') {
+        font-size: $font-size-3xl;
+    }
+}
+
+h4 {
+    font-size: $font-size-xl;
+
+    @include respond-to('md') {
+        font-size: $font-size-2xl;
+    }
+}
+
+h5 {
+    font-size: $font-size-lg;
+
+    @include respond-to('md') {
+        font-size: $font-size-xl;
+    }
+}
+
+h6 {
+    font-size: $font-size-base;
+
+    @include respond-to('md') {
+        font-size: $font-size-lg;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Paragraphs
+// --------------------------------------------------------------------------
+
+p {
+    margin-bottom: $spacing-4;
+    line-height: $line-height-relaxed;
+    color: $color-white;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Text Styles
+// --------------------------------------------------------------------------
+
+strong,
+b {
+    font-weight: $font-weight-semibold;
+}
+
+em,
+i {
+    font-style: italic;
+}
+
+small {
+    font-size: $font-size-sm;
+}
+
+mark {
+    background-color: $color-warning-light;
+    padding: 0.125em 0.25em;
+    border-radius: $border-radius-sm;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+ins {
+    text-decoration: underline;
+}
+
+// --------------------------------------------------------------------------
+// Code & Pre
+// --------------------------------------------------------------------------
+
+code {
+    font-family: $font-family-mono;
+    font-size: $font-size-sm;
+    background-color: $color-gray-100;
+    padding: 0.125em 0.375em;
+    border-radius: $border-radius-base;
+}
+
+pre {
+    font-family: $font-family-mono;
+    font-size: $font-size-sm;
+    background-color: $color-gray-900;
+    color: $text-dark;
+    padding: $spacing-4;
+    border-radius: $border-radius-lg;
+    overflow-x: auto;
+
+    code {
+        background: none;
+        padding: 0;
+        font-size: inherit;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Blockquote
+// --------------------------------------------------------------------------
+
+blockquote {
+    padding-left: $spacing-4;
+    border-left: 4px solid $color-primary;
+    font-style: italic;
+    color: $text-light-muted;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Lists
+// --------------------------------------------------------------------------
+
+ul,
+ol {
+    padding-left: $spacing-6;
+    margin-bottom: $spacing-4;
+
+    li {
+        margin-bottom: $spacing-2;
+        line-height: $line-height-relaxed;
+    }
+
+    ul,
+    ol {
+        margin-top: $spacing-2;
+        margin-bottom: 0;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Selection
+// --------------------------------------------------------------------------
+
+::selection {
+    background-color: $color-primary;
+    color: $color-white;
+}

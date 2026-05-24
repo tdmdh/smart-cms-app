@@ -1,0 +1,32 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+.auth-layout {
+    position: relative;
+
+    &__header {
+        position: absolute;
+        top: $spacing-6;
+        left: $spacing-6;
+        right: $spacing-6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        margin-bottom: $spacing-8;
+        z-index: 2;
+    }
+
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 150vh;
+    }
+
+    &__main {
+        position: relative;
+        z-index: 1;
+    }
+}

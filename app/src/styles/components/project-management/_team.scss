@@ -1,0 +1,306 @@
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+// ==========================================================================
+// PROJECT TEAM
+// ==========================================================================
+
+.project-team {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: $spacing-6;
+        flex-wrap: wrap;
+        gap: $spacing-3;
+
+        &-left {
+            display: flex;
+            align-items: flex-start;
+            gap: $spacing-3;
+        }
+        
+        &-actions {
+            background: alpha($color-gray-900, 0.1);
+            border: 0.5px solid alpha($color-gray-900, 0.2);
+            display: flex;
+            align-items: center;
+            border-radius: $border-radius-3xl;
+            corner-shape: superellipse(1.2);
+            gap: $spacing-2;
+            padding: $spacing-1;
+        }
+    }
+
+    &__stats {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        background-color: alpha($color-gray-900, 0.1);
+        border: 0.5px solid alpha($color-gray-900, 0.2);
+        border-radius: $border-radius-7xl;
+        padding: $spacing-1;
+    }
+
+    &__stat {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+        padding: $spacing-1 $spacing-2;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        border-radius: $border-radius-5xl;
+
+        &--success {
+            background: rgba($color-success, 0.15);
+            color: $color-success;
+        }
+
+        &--info {
+            background: rgba($color-info, 0.15);
+            color: $color-info;
+        }
+
+        &--warning {
+            background: rgba($color-warning, 0.15);
+            color: $color-warning;
+        }
+
+        &--default {
+            background: var(--surface-tertiary);
+            color: var(--text-secondary);
+        }
+
+        &--primary {
+            background: rgba($color-primary, 0.15);
+            color: $color-primary;
+        }
+
+        &--danger {
+            background: rgba($color-error, 0.15);
+            color: $color-error;
+        }
+    }
+
+    &__count {
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+        background: var(--surface-secondary);
+        padding: $spacing-1 $spacing-2;
+        border-radius: $border-radius-sm;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+        margin-bottom: $spacing-6;
+    }
+
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: $spacing-12;
+        text-align: center;
+        color: var(--text-tertiary);
+
+        svg {
+            opacity: 0.5;
+            margin-bottom: $spacing-4;
+        }
+
+        h3 {
+            margin: 0 0 $spacing-2;
+            color: var(--text-primary);
+        }
+
+        p {
+            margin: 0 0 $spacing-4;
+        }
+    }
+
+    &__roles-info {
+        background: var(--surface-secondary);
+        border-radius: $border-radius-xl;
+        padding: $spacing-4;
+
+        h4 {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semibold;
+            margin: 0 0 $spacing-3;
+        }
+    }
+
+    &__roles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-3;
+    }
+
+    &__role-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+    }
+
+    &__role-desc {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+    }
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    border-radius: calc($border-radius-5xl - $spacing-4 * 0.75);
+    padding: $spacing-3 $spacing-0;
+    position: relative;
+
+
+    &__info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+        line-height: 0.8;
+    }
+
+    &__name {
+        font-weight: $font-weight-medium;
+        color: $color-gray-200;
+    }
+
+    &__email {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+    }
+
+    &__joined {
+        font-size: $font-size-xs;
+        color: $color-gray-600;
+    }
+
+    &__role {
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: $spacing-1;
+        }
+    }
+
+    &__actions {
+        position: relative;
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        border-radius: $border-radius-sm;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        @include transition((background-color, color));
+
+        &:hover {
+            background: var(--surface-secondary);
+            color: var(--text-primary);
+        }
+    }
+
+    &__dropdown {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        margin-top: $spacing-1;
+        background: var(--surface-primary);
+        border: 1px solid var(--border-primary);
+        border-radius: $border-radius-lg;
+        box-shadow: $shadow-lg;
+        min-width: 160px;
+        z-index: 10;
+        overflow: hidden;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+            width: 100%;
+            padding: $spacing-2 $spacing-3;
+            background: transparent;
+            border: none;
+            font-size: $font-size-sm;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            @include transition(background-color);
+
+            &:hover {
+                background: var(--surface-secondary);
+            }
+        }
+    }
+
+    &__dropdown-danger {
+        color: $color-error !important;
+    }
+
+    &--skeleton {
+        height: 64px;
+        background: var(--surface-secondary);
+        animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+
+    &--skeleton-spaced {
+        margin-bottom: $spacing-2;
+    }
+
+    &--selectable {
+        width: 100%;
+        border: 1px solid  $color-secondary-light;
+        border-radius: calc($border-radius-5xl - $spacing-5 * 0.75);
+        padding: $spacing-3;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+
+        &:hover {
+            border-color: var(--border-primary);
+            background: var(--surface-secondary);
+        }
+
+        &.is-selected {
+            border-color: var(--color-primary);
+            background: var(--color-primary-subtle, rgba($color-primary, 0.12));
+        }
+    }
+
+    &__selected-icon {
+        color: var(--color-primary);
+        margin-left: $spacing-2;
+        flex-shrink: 0;
+    }
+}
+
+.project-team__member-picker {
+    max-height: 240px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    margin-bottom: $spacing-4;
+}
+
+.project-team__empty-message {
+    text-align: center;
+    padding: $spacing-8;
+    color: var(--text-muted);
+}

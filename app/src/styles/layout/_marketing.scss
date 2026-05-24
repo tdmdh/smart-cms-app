@@ -1,0 +1,28 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+.marketing-layout {
+    position: relative;
+
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 150vh;
+    }
+
+    &__nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: $z-index-sticky;
+        pointer-events: auto;
+    }
+
+    &__main {
+        position: relative;
+        z-index: 1;
+    }
+}

@@ -1,0 +1,201 @@
+// ==========================================================================
+// BASE STYLES
+// ==========================================================================
+// Global base styles for the application.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// --------------------------------------------------------------------------
+// Root Variables (CSS Custom Properties)
+// --------------------------------------------------------------------------
+
+:root {
+    // Colors
+    --color-primary: #{$color-primary};
+    --color-primary-light: #{$color-primary-light};
+    --color-primary-dark: #{$color-primary-dark};
+
+    --color-secondary: #{$color-secondary};
+    --color-accent: #{$color-accent};
+
+    --color-success: #{$color-success};
+    --color-warning: #{$color-warning};
+    --color-error: #{$color-error};
+    --color-info: #{$color-info};
+
+    // Background (Dark theme default)
+    --bg-primary: #{$bg-dark};
+    --bg-surface: #{$bg-surface-dark};
+    --bg-elevated: #{$color-gray-800};
+
+    // Text (Dark theme default)
+    --text-primary: #{$text-dark};
+    --text-secondary: #{$text-dark-muted};
+
+    // Border
+    --border-color: #{$color-gray-700};
+
+    // Shadow
+    --shadow: #{$shadow-base};
+    --shadow-lg: #{$shadow-lg};
+
+    // Layout
+    --header-height: #{$header-height};
+    --sidebar-width: #{$sidebar-width};
+    --sidebar-collapsed-width: #{$sidebar-collapsed-width};
+}
+
+// Light mode support (when user prefers light)
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #{$bg-dark};
+        --bg-surface: #{$bg-surface-dark};
+        --bg-elevated: #{$color-white};
+
+        --text-primary: #{$text-dark};
+        --text-secondary: #{$text-dark-muted};
+
+        --border-color: #{$color-gray-200};
+    }
+}
+
+// Manual light mode class
+.light {
+    --bg-primary: #{$bg-light};
+    --bg-surface: #{$bg-surface-light};
+    --bg-elevated: #{$color-white};
+
+    --text-primary: #{$text-light};
+    --text-secondary: #{$text-light-muted};
+
+    --border-color: #{$color-gray-200};
+}
+
+// Manual dark mode class (to force dark regardless of system preference)
+.dark {
+    --bg-primary: #{$bg-dark};
+    --bg-surface: #{$bg-surface-dark};
+    --bg-elevated: #{$color-white};
+
+    --text-primary: #{$text-dark};
+    --text-secondary: #{$text-dark-muted};
+
+    --border-color: #{$color-gray-700};
+}
+
+// --------------------------------------------------------------------------
+// HTML & Body
+// --------------------------------------------------------------------------
+
+html {
+    font-size: 100%; // 16px base
+    scroll-behavior: smooth;
+
+    @include reduced-motion {
+        scroll-behavior: auto;
+    }
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    @include custom-scrollbar;
+}
+
+// --------------------------------------------------------------------------
+// Main App Container
+// --------------------------------------------------------------------------
+
+#__next,
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+// --------------------------------------------------------------------------
+// Focus States
+// --------------------------------------------------------------------------
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+// --------------------------------------------------------------------------
+// Interactive Elements
+// --------------------------------------------------------------------------
+
+button,
+[role='button'] {
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Images
+// --------------------------------------------------------------------------
+
+img {
+    height: auto;
+}
+
+// --------------------------------------------------------------------------
+// HR
+// --------------------------------------------------------------------------
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: $spacing-6 0;
+}
+
+// --------------------------------------------------------------------------
+// Table
+// --------------------------------------------------------------------------
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    font-weight: $font-weight-semibold;
+}
+
+// --------------------------------------------------------------------------
+// Form Elements
+// --------------------------------------------------------------------------
+
+label {
+    display: block;
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-2;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+}
+
+// Hide autofill background
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-primary) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+}

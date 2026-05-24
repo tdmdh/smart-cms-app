@@ -1,0 +1,1 @@
+export { WorkspaceTeam } from './WorkspaceTeam';

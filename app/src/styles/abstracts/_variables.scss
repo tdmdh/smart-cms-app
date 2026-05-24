@@ -1,0 +1,248 @@
+// ==========================================================================
+// VARIABLES
+// ==========================================================================
+// All global variables for the project.
+// ==========================================================================
+// --------------------------------------------------------------------------
+// Colors - Academic Navy Palette
+// --------------------------------------------------------------------------
+
+// Academic Palette (from deep to light)
+
+$academic-ink-navy: #071529; // Deepest midnight, the void of knowledge
+$academic-prussian-blue: #0b2545; // Inky profound, historical intrigue
+$academic-oxford-navy: #13315c; // Midnight sky, wise authority
+$academic-yale-blue: #134074; // Academic prestige, cool sophistication
+$academic-steel-blue: #1a5490; // Scholarly ambition, trusted expertise
+$academic-cerulean: #4a7fb0; // Clarity of thought, open-minded inquiry
+$academic-powder-blue: #8da9c4; // Soft sophistication, modern minimalism
+$academic-ice-blue: #b8cce0; // Gentle wisdom, calm reflection
+$academic-frost-white: #e8eff7; // Pristine clarity, pure beginnings
+
+
+// Brand Colors (mapped from academic navy palette)
+$color-primary: $academic-yale-blue;
+$color-primary-light: $academic-cerulean;
+$color-primary-dark: $academic-prussian-blue;
+
+$color-secondary: $academic-oxford-navy;
+$color-secondary-light: $academic-steel-blue;
+$color-secondary-dark: $academic-ink-navy;
+
+$color-accent: #d4af37; // Classic gold - timeless academic distinction
+$color-accent-light: #e6c864; // Lighter gold for hover states
+$color-accent-dark: #b8942e; // Deeper gold for depth
+
+$color-accent-secondary: #8b1e2d;       // Academic crimson – authority, tradition, distinction
+$color-accent-secondary-light: #a83242; // Elevated crimson for hover / emphasis
+$color-accent-secondary-dark: #6f1623;  // Oxblood depth for serious states
+
+// Neutral Colors (cool slate-blue grays to complement the navy palette)
+$color-white: #ffffff;
+$color-black: #000000;
+
+$color-gray-50: #f8fafc; // Near white with cool undertone
+$color-gray-100: #f1f5f9; // Lightest slate
+$color-gray-200: #e2e8f0; // Light slate
+$color-gray-300: #cbd5e1; // Soft slate
+$color-gray-400: #94a3b8; // Medium slate
+$color-gray-500: #64748b; // Balanced slate
+$color-gray-600: #475569; // Deep slate
+$color-gray-700: #334155; // Darker slate
+$color-gray-800: #1e293b; // Very dark slate
+$color-gray-900: #0f172a; // Near black slate
+$color-gray-950: #010509; // Black slate
+$color-gray-990: #000203; // Black slate
+
+// Semantic Colors (suited to academic navy palette)
+$color-success: #10b981; // Emerald green - scholarly achievement
+$color-success-light: #34d399;
+$color-success-dark: #059669;
+
+$color-warning: #f59e0b; // Amber - distinguished attention
+$color-warning-light: #fbbf24;
+$color-warning-dark: #d97706;
+
+$color-error: #ef4444; // Classic red - clear alerts
+$color-error-light: #f87171;
+$color-error-dark: #dc2626;
+
+$color-info: $academic-cerulean; // Using palette blue for info
+$color-info-light: $academic-powder-blue;
+$color-info-dark: $academic-steel-blue;
+
+// Background Colors (Dark theme default)
+$bg-light: #f8fafc; // Cool off-white
+$bg-dark: $color-gray-990;
+$bg-surface-light: #f1f5f9; // Light slate surface
+$bg-surface-dark: $color-secondary-dark;
+
+// Text Colors
+$text-light: $academic-ink-navy;
+$text-light-muted: $academic-oxford-navy;
+$text-dark: #f8fafc; // Cool off-white
+$text-dark-muted: $academic-powder-blue;
+
+// --------------------------------------------------------------------------
+// Typography
+// --------------------------------------------------------------------------
+
+// Font Families (using CSS variables from next/font with fallbacks)
+$font-family-sans: var(--font-sans, 'Plus Jakarta Sans'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-mono: var(--font-sans, 'Plus Jakarta Sans'), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-heading: var(--font-heading, 'Outfit'), var(--font-sans, 'Plus Jakarta Sans'), -apple-system, BlinkMacSystemFont, sans-serif;
+
+// Font Sizes (using a modular scale based on 1rem = 16px)
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+$font-size-6xl: 3.75rem; // 60px
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Line Heights
+$line-height-none: 1;
+$line-height-tight: 1.25;
+$line-height-snug: 1.375;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.625;
+$line-height-loose: 2;
+
+// Letter Spacing
+$letter-spacing-tighter: -0.05em;
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+$letter-spacing-wider: 0.05em;
+$letter-spacing-widest: 0.1em;
+
+// --------------------------------------------------------------------------
+// Spacing
+// --------------------------------------------------------------------------
+
+$spacing-0: 0;
+$spacing-1: 0.25rem; // 4px
+$spacing-2: 0.5rem; // 8px
+$spacing-3: 0.75rem; // 12px
+$spacing-4: 1rem; // 16px
+$spacing-5: 1.25rem; // 20px
+$spacing-6: 1.5rem; // 24px
+$spacing-8: 2rem; // 32px
+$spacing-10: 2.5rem; // 40px
+$spacing-12: 3rem; // 48px
+$spacing-16: 4rem; // 64px
+$spacing-20: 5rem; // 80px
+$spacing-24: 6rem; // 96px
+
+// --------------------------------------------------------------------------
+// Borders
+// --------------------------------------------------------------------------
+
+$border-radius-none: 0;
+$border-radius-sm: 0.125rem; // 2px
+$border-radius-base: 0.25rem; // 4px
+$border-radius-md: 0.375rem; // 6px
+$border-radius-lg: 0.5rem; // 8px
+$border-radius-xl: 0.625rem; // 10px
+$border-radius-2xl: 1rem; // 16px
+$border-radius-3xl: 1.5rem; // 24px
+$border-radius-4xl: 1.8rem; // 28px
+$border-radius-5xl: 2rem; // 32px
+$border-radius-6xl: 2.5rem; // 40px
+$border-radius-7xl: 3rem; // 48px
+$border-radius-full: 9999px;
+
+$border-radius-squircle: 1.1rem;
+$border-radius-squircle-2xl: 1.5rem;
+$border-radius-squircle-3xl: 2rem;
+$border-radius-squircle-full: 9999px;
+
+$border-width-none: 0;
+$border-width-sm: 1px;
+$border-width-base: 2px;
+$border-width-lg: 4px;
+$border-width-xl: 8px;
+
+// --------------------------------------------------------------------------
+// Shadows
+// --------------------------------------------------------------------------
+
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+$shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+$shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+$shadow-none: 0 0 #0000;
+
+// --------------------------------------------------------------------------
+// Breakpoints
+// --------------------------------------------------------------------------
+
+$breakpoint-xs: 320px;
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// Breakpoint map for mixins
+$breakpoints: (
+    'xs': $breakpoint-xs,
+    'sm': $breakpoint-sm,
+    'md': $breakpoint-md,
+    'lg': $breakpoint-lg,
+    'xl': $breakpoint-xl,
+    '2xl': $breakpoint-2xl
+);
+
+// --------------------------------------------------------------------------
+// Transitions
+// --------------------------------------------------------------------------
+
+$transition-duration-fast: 150ms;
+$transition-duration-base: 200ms;
+$transition-duration-slow: 300ms;
+$transition-duration-slower: 500ms;
+
+$transition-timing-ease: ease;
+$transition-timing-ease-in: ease-in;
+$transition-timing-ease-out: ease-out;
+$transition-timing-ease-in-out: ease-in-out;
+$transition-timing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// --------------------------------------------------------------------------
+// Z-Index
+// --------------------------------------------------------------------------
+$z-index-dropdown: 1050;
+$z-index-sticky: 1050;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+$z-index-toast: 1080;
+
+// --------------------------------------------------------------------------
+// Layout
+// --------------------------------------------------------------------------
+
+$sidebar-width: 280px;
+$sidebar-collapsed-width: 90px;
+$header-height: 64px;
+$footer-height: 64px;
+$container-max-width: 1280px;
+$content-max-width: 960px;

@@ -1,0 +1,231 @@
+// ==========================================================================
+// CO-SIGN COMPONENTS
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+// --------------------------------------------------------------------------
+// Confidence Badge
+// --------------------------------------------------------------------------
+
+.confidence-badge {
+    display: inline-flex;
+    align-items: center;
+    font-weight: $font-weight-semibold;
+    border-radius: 999px;
+    white-space: nowrap;
+
+    &--sm {
+        font-size: $font-size-xs;
+        padding: 2px $spacing-2;
+    }
+
+    &--md {
+        font-size: $font-size-sm;
+        padding: 3px $spacing-3;
+    }
+
+    &--high {
+        color: $color-success-dark;
+        background: alpha($color-success, 0.12);
+        border: 1px solid alpha($color-success, 0.25);
+    }
+
+    &--medium {
+        color: $color-warning-dark;
+        background: alpha($color-warning, 0.12);
+        border: 1px solid alpha($color-warning, 0.25);
+    }
+
+    &--low {
+        color: $color-error-dark;
+        background: alpha($color-error, 0.12);
+        border: 1px solid alpha($color-error, 0.25);
+    }
+}
+
+// --------------------------------------------------------------------------
+// Checkpoint List
+// --------------------------------------------------------------------------
+
+.checkpoint-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+
+        &--pass { color: $color-success-dark; }
+        &--fail { color: $color-error-dark; }
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Co-Sign Review Panel
+// --------------------------------------------------------------------------
+
+.cosign-review {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+    padding: $spacing-4;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        flex-wrap: wrap;
+    }
+
+    &__output-type {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wide;
+        color: var(--text-tertiary);
+    }
+
+    &__rationale {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+        font-style: italic;
+        padding: $spacing-3;
+        background: var(--surface-secondary);
+        border-radius: $border-radius-md;
+        border-left: 3px solid var(--border-primary);
+    }
+
+    &__section-title {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wide;
+        color: var(--text-tertiary);
+        margin-bottom: $spacing-2;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-3;
+        padding-top: $spacing-4;
+        border-top: 1px solid var(--border-primary);
+    }
+
+    &__action-row {
+        display: flex;
+        gap: $spacing-2;
+    }
+
+    &__reject-input {
+        width: 100%;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Co-Sign Queue Page
+// --------------------------------------------------------------------------
+
+.cosign-queue {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $spacing-6;
+    }
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        padding: $spacing-3 $spacing-4;
+        background: var(--surface-primary);
+        border: 1px solid var(--border-primary);
+        border-radius: $border-radius-lg;
+        margin-bottom: $spacing-2;
+
+        &:hover {
+            background: var(--surface-hover);
+        }
+    }
+
+    &__row-meta {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__row-rationale {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__row-date {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+    }
+
+    &__empty {
+        text-align: center;
+        padding: $spacing-12;
+        color: var(--text-tertiary);
+        font-size: $font-size-sm;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Co-Sign History Tab
+// --------------------------------------------------------------------------
+
+.cosign-history {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3;
+
+    &__item {
+        padding: $spacing-3;
+        border: 1px solid var(--border-primary);
+        border-radius: $border-radius-md;
+        font-size: $font-size-sm;
+    }
+
+    &__item-meta {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        flex-wrap: wrap;
+        margin-bottom: $spacing-1;
+    }
+
+    &__rationale {
+        color: var(--text-secondary);
+        font-style: italic;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}

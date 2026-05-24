@@ -1,0 +1,105 @@
+// ==========================================================================
+// MAIN SCSS FILE - Entry Point
+// ==========================================================================
+// This file imports all partials in the correct order.
+// Following the 7-1 Pattern architecture.
+// ==========================================================================
+
+// 1. Abstracts - Variables, functions, mixins, placeholders
+// These produce no CSS output themselves
+@forward 'abstracts/variables';
+@forward 'abstracts/functions';
+@forward 'abstracts/mixins';
+@forward 'abstracts/placeholders';
+
+// 2. Vendors - Third-party CSS (if any)
+// @forward 'vendors/normalize';
+
+// 3. Base - Reset, typography, base styles
+@forward 'base/reset';
+@forward 'base/typography';
+@forward 'base/base';
+
+// 4. Layout - Major layout components
+@forward 'layout/grid';
+@forward 'layout/header';
+@forward 'layout/footer';
+@forward 'layout/sidebar';
+@forward 'layout/dashboard-layout';
+@forward 'layout/marketing';
+@forward 'layout/auth';
+
+// 5. Components - Reusable UI components
+@forward 'components/buttons';
+@forward 'components/cards';
+@forward 'components/empty-state';
+@forward 'components/forms';
+@forward 'components/modals';
+@forward 'components/tables';
+@forward 'components/badges';
+@forward 'components/alerts';
+@forward 'components/multi-step';
+@forward 'components/dialog';
+@forward 'components/sidebar-toggle';
+@forward 'components/sidebar-item';
+@forward 'components/sidebar-nav';
+@forward 'components/sidebar-view';
+@forward 'components/dropdown';
+@forward 'components/icon';
+@forward 'components/debug-panel';
+@forward 'components/tasks';
+@forward 'components/forms-view';
+@forward 'components/tabs';
+@forward 'components/navigation';
+@forward 'components/mocks';
+@forward 'components/charts';
+@forward 'components/effects/background';
+@forward 'components/project-management/milestones';
+@forward 'components/project-management/kanban';
+@forward 'components/project-management/projects';
+@forward 'components/project-management/team';
+@forward 'components/project-management/settings';
+@forward 'components/project-management/media';
+@forward 'components/client-management/clients';
+@forward 'components/client-management/overview';
+@forward 'components/client-management/projects';
+@forward 'components/client-management/team';
+@forward 'components/client-management/settings';
+@forward 'components/deployments/config';
+@forward 'components/sidebar-user-profile';
+// Media Library
+@forward 'components/upload-zone';
+@forward 'components/asset-card';
+@forward 'components/media-library';
+
+// Integrations
+@forward 'components/integrations';
+
+// Chat
+@forward 'components/chat';
+
+// Prose / Markdown
+@forward 'components/prose';
+
+// Knowledge Base
+@forward 'components/knowledge';
+
+// Co-Sign
+@forward 'components/cosign';
+
+// 6. Pages - Page-specific styles
+@forward 'pages/dashboard';
+@forward 'pages/auth';
+@forward 'pages/settings';
+@forward 'pages/dashboard-page';
+@forward 'pages/home';
+@forward 'pages/inbox';
+@forward 'pages/not-found';
+
+// 7. Themes - Theme variations (optional)
+// @forward 'themes/dark';
+// @forward 'themes/admin';
+
+// 8. Utilities - Helper classes
+@forward 'utilities/helpers';
+@forward 'utilities/animations';

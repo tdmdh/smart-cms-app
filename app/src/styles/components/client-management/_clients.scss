@@ -1,0 +1,786 @@
+// =============================================================================
+// CLIENTS COMPONENTS
+// =============================================================================
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+
+// Clients List Grid
+.clients-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $spacing-4;
+}
+
+// =============================================================================
+// CLIENT CARD — Premium Redesign
+// =============================================================================
+
+.client-card {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-4;
+    background: alpha($color-gray-900, 0.08);
+    border: 1px solid alpha($color-gray-700, 0.18);
+    border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+    corner-shape: superellipse(1.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    @include transition((transform, box-shadow, border-color, background-color));
+
+    // Glassmorphic inner shimmer
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba($color-white, 0.03) 0%,
+            transparent 55%
+        );
+        pointer-events: none;
+        border-radius: inherit;
+    }
+
+    &:hover {
+        border-color: rgba($color-primary, 0.3);
+        background: alpha($color-gray-900, 0.14);
+        box-shadow:
+            0 8px 24px -6px rgba($color-primary, 0.16),
+            0 2px 8px rgba(0, 0, 0, 0.22);
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        border-radius: $border-radius-lg;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        opacity: 0;
+        flex-shrink: 0;
+        @include transition((opacity, background-color));
+
+        &:hover {
+            background: alpha($color-gray-700, 0.2);
+            color: var(--text-primary);
+        }
+    }
+
+    &:hover &__menu {
+        opacity: 1;
+    }
+
+    // ── Top row: avatar + header ───────────────────────────────────────────
+    &__top {
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-3;
+        margin-bottom: $spacing-4;
+    }
+
+    &__avatar {
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        border-radius: $border-radius-xl;
+        corner-shape: superellipse(1.2);
+        border: 2px solid alpha($color-primary, 0.15);
+        overflow: hidden;
+        background: linear-gradient(
+            135deg,
+            $color-primary 0%,
+            $color-secondary 100%
+        );
+
+        img,
+        .user-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: $spacing-2;
+    }
+
+    &__name {
+        font-size: $font-size-base;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        @include text-truncate;
+    }
+
+    &__menu {
+        opacity: 0;
+        flex-shrink: 0;
+        @include transition(opacity);
+    }
+
+    &:hover &__menu {
+        opacity: 1;
+    }
+
+    &__email {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+        @include text-truncate;
+        opacity: 0.8;
+    }
+
+    // ── Stats row ──────────────────────────────────────────────────────────
+    &__stats {
+        display: flex;
+        gap: $spacing-3;
+        padding: $spacing-3;
+        background: alpha($color-gray-900, 0.06);
+        border: 1px solid alpha($color-gray-700, 0.12);
+        border-radius: $border-radius-lg;
+        margin-bottom: $spacing-3;
+    }
+
+    &__stat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        text-align: center;
+
+        & + & {
+            border-left: 1px solid alpha($color-gray-700, 0.15);
+        }
+    }
+
+    &__stat-value {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        line-height: 1;
+        font-family: $font-family-mono;
+        letter-spacing: -0.03em;
+    }
+
+    &__stat-label {
+        font-size: 0.6rem;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wider;
+        color: var(--text-tertiary);
+        opacity: 0.75;
+    }
+
+    // ── Activity / health bar ──────────────────────────────────────────────
+    &__health {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        margin-bottom: $spacing-3;
+    }
+
+    &__health-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: $border-radius-full;
+        background: alpha($color-gray-700, 0.2);
+        overflow: hidden;
+    }
+
+    &__health-fill {
+        height: 100%;
+        border-radius: $border-radius-full;
+        background: linear-gradient(90deg, $color-accent, $color-success);
+        box-shadow: 0 0 6px rgba($color-accent, 0.35);
+    }
+
+    &__health-text {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+        white-space: nowrap;
+        font-weight: $font-weight-medium;
+        opacity: 0.8;
+    }
+
+    // ── Footer: status badge ───────────────────────────────────────────────
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-2;
+        padding-top: $spacing-3;
+        border-top: 1px solid alpha($color-gray-700, 0.1);
+    }
+
+    &__badge {
+        flex-shrink: 0;
+    }
+}
+
+// Client Detail
+.client-detail {
+    padding: var(--spacing-6);
+
+    &__nav {
+        margin-bottom: var(--spacing-4);
+    }
+
+    &__back {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: var(--font-size-sm);
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--text-primary);
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--spacing-6);
+        padding-bottom: var(--spacing-6);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: var(--spacing-6);
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+
+    &__avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+        font-size: var(--font-size-2xl);
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+    }
+
+    &__info {
+        flex: 1;
+    }
+
+    &__name {
+        font-size: var(--font-size-2xl);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    &__description {
+        color: var(--text-secondary);
+        margin-top: var(--spacing-2);
+    }
+
+    &__meta {
+        display: flex;
+        gap: var(--spacing-4);
+        margin-top: var(--spacing-3);
+        flex-wrap: wrap;
+    }
+
+    &__meta-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-1);
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary);
+        text-decoration: none;
+
+        &:hover {
+            color: var(--color-primary);
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: var(--spacing-2);
+    }
+
+    &__tabs {
+        display: flex;
+        gap: var(--spacing-1);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: var(--spacing-6);
+    }
+
+    &__tab {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        padding: var(--spacing-3) var(--spacing-4);
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: all 0.2s;
+
+        &:hover {
+            color: var(--text-primary);
+        }
+
+        &--active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+    }
+
+    &__loading,
+    &__error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-12);
+        gap: var(--spacing-4);
+    }
+}
+
+// Client Form
+.client-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-6);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-3);
+        margin-bottom: var(--spacing-6);
+    }
+
+    &__icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    &__title {
+        font-size: var(--font-size-xl);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-4);
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-3);
+        margin-top: var(--spacing-6);
+        padding-top: var(--spacing-6);
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+// =============================================================================
+// Client Mini Profile (Header)
+// =============================================================================
+
+.client-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+        min-width: 0;
+        line-height: 1;
+    }
+
+    &__name {
+        font-size: $font-size-base;
+        font-weight: $font-weight-semibold;
+        color: $color-gray-300;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+    }
+
+    &__meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+
+    &__back {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-2;
+        padding: $spacing-2;
+        margin-right: $spacing-2;
+        color: var(--text-secondary);
+        border-radius: $border-radius-lg;
+        text-decoration: none;
+        transition:
+            color $transition-duration-fast,
+            background-color $transition-duration-fast;
+
+        &:hover {
+            color: var(--text-primary);
+            background: alpha($color-gray-500, 0.1);
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: $spacing-2;
+        margin-left: auto;
+
+        @media (max-width: $breakpoint-sm) {
+            display: none;
+        }
+    }
+}
+
+// =============================================================================
+// CLIENTS BOARD — Vertical Tabs Layout
+// =============================================================================
+
+.clients-board {
+    // Standard horizontal tabs layout
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+
+    // Give the content panels full remaining width
+    .tabs__content {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+// =============================================================================
+// INVITATION ROWS — Pending Onboarding List
+// =============================================================================
+
+.invitation-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+}
+
+.invitation-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    background: alpha($color-gray-900, 0.06);
+    border: 1px solid alpha($color-gray-700, 0.14);
+    border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+    corner-shape: superellipse(1.2);
+    @include transition((background-color, border-color));
+
+    &:hover {
+        background: alpha($color-gray-900, 0.1);
+        border-color: alpha($color-gray-700, 0.22);
+    }
+
+    &--skeleton {
+        height: 58px;
+    }
+
+    &__avatar {
+        flex-shrink: 0;
+    }
+
+    &__info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__email {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        @include text-truncate;
+    }
+
+    &__meta {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+    }
+
+    &__status {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+    }
+
+    &__expires {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+        white-space: nowrap;
+        min-width: 100px;
+        text-align: right;
+    }
+}
+
+// =============================================================================
+// CLIENT MEMBERS LIST — Shared member row styles
+// =============================================================================
+
+.client-members {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-3;
+    }
+
+    &__title {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+    }
+
+    &__count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 $spacing-1;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        background: alpha($color-gray-600, 0.25);
+        border-radius: $border-radius-full;
+    }
+
+    &__meta {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+        margin: 0;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+    }
+
+    &__member {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        padding: $spacing-3 $spacing-4;
+        background: alpha($color-gray-900, 0.06);
+        border: 1px solid alpha($color-gray-700, 0.14);
+        border-radius: $border-radius-2xl;
+        corner-shape: superellipse(1.2);
+        @include transition((background-color, border-color));
+
+        &:hover {
+            background: alpha($color-gray-900, 0.1);
+            border-color: alpha($color-gray-700, 0.22);
+
+            .client-members__remove {
+                opacity: 1;
+            }
+        }
+
+        &--skeleton {
+            height: 58px;
+        }
+    }
+
+    &__member-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__member-name {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        @include text-truncate;
+    }
+
+    &__member-email {
+        font-size: $font-size-xs;
+        color: var(--text-tertiary);
+        @include text-truncate;
+    }
+
+    &__member-role {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+    }
+
+    &__remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        border-radius: $border-radius-md;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        opacity: 0;
+        flex-shrink: 0;
+        @include transition((opacity, background-color, color));
+
+        &:hover {
+            background: alpha($color-error, 0.12);
+            color: $color-error-light;
+            opacity: 1;
+        }
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// =============================================================================
+// CLIENT TEAM PAGE — Two-section layout
+// =============================================================================
+
+.client-team {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    padding: $spacing-2;
+}
+
+.client-developers {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+}
+
+// =============================================================================
+// ASSIGN MEMBER DIALOG LIST
+// =============================================================================
+
+.assign-member-list {
+    list-style: none;
+    margin: $spacing-2 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    max-height: 320px;
+    overflow-y: auto;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        padding: $spacing-2 $spacing-3;
+        border-radius: $border-radius-xl;
+        @include transition(background-color);
+
+        &:hover {
+            background: alpha($color-gray-700, 0.1);
+        }
+    }
+
+    &__name {
+        flex: 1;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: var(--text-primary);
+        @include text-truncate;
+    }
+}

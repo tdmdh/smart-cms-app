@@ -1,0 +1,75 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+
+.icon {
+    display: inline-flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size, 24px);
+    height: var(--icon-size, 24px);
+    transition: all cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    &--xs {
+        --icon-size: 12px;
+    }
+
+    &--sm {
+        --icon-size: 16px;
+    }
+
+    &--md {
+        --icon-size: 20px;
+    }
+
+    &--lg {
+        --icon-size: 24px;
+    }
+
+    &--xl {
+        --icon-size: 32px;
+    }
+
+    &--spin {
+        animation: icon-spin 1s linear infinite;
+    }
+
+    &--pulse {
+        animation: icon-pulse 1.5s ease-in-out infinite;
+    }
+
+    &--muted {
+        opacity: 0.5;
+    }
+}
+
+
+@keyframes icon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes icon-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}

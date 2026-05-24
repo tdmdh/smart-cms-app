@@ -1,0 +1,263 @@
+// ==========================================================================
+// CARD COMPONENTS
+// ==========================================================================
+// Card layouts and variants.
+// ==========================================================================
+
+@use 'sass:math';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+@use '../abstracts/functions' as *;
+
+
+// --------------------------------------------------------------------------
+// Base Card
+// --------------------------------------------------------------------------
+
+.card {
+    $root: &;
+    @extend %card-base;
+
+    &--interactive {
+        @extend %card-interactive;
+        background-color: alpha($color-gray-100, 1);
+        #{$root}__title {
+            color: $text-light;
+        }
+
+        #{$root}__subtitle {
+            color: $text-light-muted;
+        }
+
+        #{$root}__body {
+            color: $text-light-muted;
+        }
+    }
+
+    &--flat {
+        border: none;
+        box-shadow: none;
+        background-color: alpha($color-gray-100, 1);
+        
+        #{$root}__title {
+            color: $text-light-muted;
+        }
+
+        #{$root}__subtitle {
+            color: $text-light-muted;
+        }
+
+        #{$root}__body {
+            color: $text-light-muted;
+        }
+    }
+
+    &--bordered {
+        background-color: alpha($color-gray-900, 0.1);
+        border: 1px solid alpha($color-gray-900, 0.2);
+        box-shadow: none;
+        
+        #{$root}__title {
+            color: $text-dark-muted;
+        }
+
+        #{$root}__subtitle {
+            color: $text-dark-muted;
+        }
+
+        #{$root}__body {
+            color: $text-dark-muted;
+        }
+    }
+
+    &--elevated {
+        border: none;
+        box-shadow: $shadow-md;
+        background-color: alpha($color-gray-100, 1);
+        
+        #{$root}__title {
+            color: $text-light;
+        }
+
+        #{$root}__subtitle {
+            color: $text-light-muted;
+        }
+
+        #{$root}__body {
+            color: $text-light-muted;
+        }
+    }
+
+    &--transparent {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        corner-shape: none;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+
+        #{$root}__title {
+            color: $text-dark;
+        }
+
+        #{$root}__subtitle {
+            color: $text-dark;
+        }
+
+        #{$root}__body {
+            color: $text-dark-muted;
+        }
+    }
+
+    &--glass {
+        background-color: alpha($color-gray-900, 0.1);
+        -webkit-backdrop-filter: blur(24px) saturate(1.8);
+        backdrop-filter: blur(24px) saturate(1.8);
+        box-shadow: $shadow-md;
+        color: $text-light;
+
+        #{$root}__title {
+            color: $text-dark;
+        }
+
+        #{$root}__subtitle {
+            color: $text-dark-muted;
+        }
+
+        #{$root}__body {
+            color: $text-dark-muted;
+        }
+    }
+
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: $spacing-1;
+        margin-bottom: $spacing-4;
+        padding-bottom: $spacing-4;
+    }
+
+    &__title {
+        font-size: $font-size-4xl;
+        font-weight: $font-weight-bold;
+        text-align: center;
+    }
+
+    &__subtitle {
+        font-size: $font-size-base;
+        margin-top: $spacing-1;
+        text-align: center;
+    }
+
+    &__body {
+        flex: 1;
+    }
+
+    &__footer {
+        @include flex-center;
+        margin-top: $spacing-4;
+        padding-top: $spacing-4;
+        width: 100%;
+    }
+
+    &__media {
+        margin: (math.div($spacing-6, 1) * -1) (math.div($spacing-6, 1) * -1) $spacing-4;
+        border-radius: $border-radius-xl $border-radius-xl 0 0;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+
+    &__actions {
+        @include flex-row($spacing-2);
+    }
+}
+
+// --------------------------------------------------------------------------
+// Stat Card
+// --------------------------------------------------------------------------
+
+.stat-card {
+    @extend %card-base;
+    padding: $spacing-5;
+
+    &__icon {
+        width: 48px;
+        height: 48px;
+        border-radius: $border-radius-lg;
+        @include flex-center;
+        margin-bottom: $spacing-4;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__value {
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: $spacing-1;
+    }
+
+    &__label {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+
+    &__trend {
+        @include flex-row($spacing-1);
+        font-size: $font-size-sm;
+        margin-top: $spacing-2;
+
+        &--up {
+            color: $color-success;
+        }
+
+        &--down {
+            color: $color-error;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Empty State Card
+// --------------------------------------------------------------------------
+
+.empty-state {
+    @extend %card-base;
+    text-align: center;
+    padding: $spacing-12;
+
+    &__icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto $spacing-4;
+        color: var(--text-secondary);
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        margin-bottom: $spacing-2;
+    }
+
+    &__description {
+        font-size: $font-size-base;
+        color: var(--text-secondary);
+        max-width: 400px;
+        margin: 0 auto $spacing-6;
+    }
+}

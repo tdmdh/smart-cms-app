@@ -1,0 +1,45 @@
+// ==========================================================================
+// FOOTER LAYOUT
+// ==========================================================================
+// Footer layout styles.
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/placeholders' as *;
+
+// --------------------------------------------------------------------------
+// Footer
+// --------------------------------------------------------------------------
+
+.footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: $spacing-4 0;
+
+    &__container {
+        @extend %container;
+        @include flex-between;
+        flex-wrap: wrap;
+        gap: $spacing-4;
+    }
+
+    &__copyright {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+
+    &__links {
+        @include flex-row($spacing-4);
+        list-style: none;
+
+        a {
+            font-size: $font-size-sm;
+            color: var(--text-secondary);
+
+            &:hover {
+                color: var(--text-primary);
+            }
+        }
+    }
+}

@@ -1,0 +1,661 @@
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/functions' as *;
+@use 'sass:color';
+
+
+
+// ── Sections & Headings ───────────────────────────────────────────────────
+.deploy-config {
+
+    &__header {
+        @include flex-col($spacing-4);
+        margin-bottom: $spacing-10;
+    }
+
+    &__header-title {
+        font-size: $font-size-5xl;
+        font-weight: $font-weight-semibold;
+        color: $text-dark;
+        line-height: 1;
+    }
+
+    &__header-description {
+        font-size: $font-size-base;
+        color: $academic-powder-blue;
+        opacity: 0.6;
+    }
+
+    &__section {
+        margin-top: $spacing-6;
+        padding-top: $spacing-6;
+        border-top: 1px solid rgba($color-white, 0.05);
+        @include flex-col($spacing-4);
+    }
+
+    &__divider-heading {
+        @include flex-row($spacing-2);
+        color: $color-primary-light;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        align-items: center;
+        margin-bottom: $spacing-2;
+        letter-spacing: $letter-spacing-wide;
+    }
+
+    
+    // ── Repository list ───────────────────────────────────────────────────────
+    
+    &__repo-trigger {
+
+        &-name {
+            @include text-truncate;
+        }
+
+        &-branch {
+            
+            font-size: $font-size-xs;
+            font-family: $font-family-mono;
+            color: $academic-powder-blue;
+            opacity: 0.6;
+            margin-inline: $spacing-2;
+            background: rgba($color-white, 0.05);
+            padding: $spacing-1 $spacing-2;
+            border-radius: calc($border-radius-3xl - $spacing-3 * 0.75);
+        }
+
+        &-arrow {
+            color: $academic-powder-blue;
+        }
+
+        &-placeholder {
+            color: var(--text-secondary);
+        }
+    }
+
+
+
+
+    &__repo-list {
+        max-height: 15rem;
+        overflow-y: auto;
+        border: 0.5px solid color.adjust($color-secondary, $lightness: 5%);
+        background: alpha($color-primary-dark, 1);
+        border-radius: $border-radius-2xl;
+        corner-shape: superellipse(1.2);
+        padding: $spacing-1;
+        @include custom-scrollbar(4px);
+
+    }
+
+    &__repo-loading,
+    &__repo-empty {
+        @include flex-center;
+        gap: $spacing-2;
+        padding: $spacing-8;
+        font-size: $font-size-sm;
+        color: var(--text-tertiary);
+        background: rgba($color-white, 0.02);
+        border-radius: calc($border-radius-3xl - $spacing-1 * 0.75);
+        corner-shape: superellipse(1.2);
+    }
+
+    &__repo-item {
+        width: 100%;
+        @include flex-row($spacing-3);
+        padding: $spacing-2;
+        padding-left: $spacing-4;
+        text-align: left;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: calc($border-radius-2xl - $spacing-1 * 0.75);
+        corner-shape: superellipse(1.2);
+        cursor: pointer;
+        @include transition((background-color, border-color));
+        margin-bottom: $spacing-1;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &:hover {
+            background: rgba($color-white, 0.03);
+            border-color: rgba($color-white, 0.05);
+        }
+
+        &--selected {
+            background: rgba($color-primary-light, 0.08);
+            border: 1px solid rgba($color-primary-light, 0.2);
+
+            &:hover {
+                background: rgba($color-primary-light, 0.1);
+                border-color: rgba($color-primary-light, 0.3);
+            }
+        }
+    }
+
+    &__repo-item-icon {
+        flex-shrink: 0;
+        color: $academic-powder-blue;
+    }
+
+    &__repo-item-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__repo-item-name-row {
+        @include flex-row($spacing-2);
+        flex-wrap: nowrap;
+    }
+
+    &__repo-item-name {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $text-dark;
+        @include text-truncate;
+    }
+
+    &__repo-item-lock {
+        flex-shrink: 0;
+        color: $color-warning;
+        opacity: 0.75;
+    }
+
+    &__repo-item-badge {
+        @include flex-row($spacing-1);
+        flex-shrink: 0;
+        padding: 0 $spacing-2;
+        border-radius: $border-radius-base;
+        font-size: 0.625rem;
+        font-weight: $font-weight-semibold;
+        background: rgba($color-info, 0.12);
+        color: $color-info-light;
+        border: 1px solid rgba($color-info, 0.2);
+    }
+
+    &__repo-item-desc {
+        font-size: $font-size-xs;
+        color: $academic-powder-blue;
+        opacity: 0.8;
+        @include text-truncate;
+        margin-top: 2px;
+    }
+
+    &__repo-item-branch {
+        font-size: $font-size-xs;
+        font-family: $font-family-mono;
+        color: $academic-powder-blue;
+        opacity: 0.6;
+        flex-shrink: 0;
+        background: rgba($color-white, 0.05);
+        padding: $spacing-1 $spacing-2;
+        border-radius: calc($border-radius-3xl - $spacing-3 * 0.75);
+    }
+
+    // ── Selected repo pill ────────────────────────────────────────────────────
+
+    &__repo-selected {
+        @include flex-row($spacing-3);
+        margin-top: $spacing-3;
+        padding: $spacing-2;
+        padding-left: $spacing-4;
+        border-radius: $border-radius-3xl;
+        corner-shape: superellipse(1.2);
+        background: rgba($color-success, 0.05);
+        border: 1px solid rgba($color-success, 0.2);
+        font-size: $font-size-sm;
+        color: $color-success-light;
+        font-weight: $font-weight-medium;
+    }
+
+    &__repo-selected-link {
+        margin-left: auto;
+        color: color.adjust($color-success, $alpha: -0.3);
+        @include transition(color);
+        padding: $spacing-1;
+
+        &:hover {
+            color: $color-success-light;
+        }
+    }
+
+    // ── Directory selector ───────────────────────────────────────────────────
+
+    &__dir-trigger {
+        justify-content: space-between;
+    }
+
+    &__dir-trigger-value {
+        @include text-truncate;
+        font-family: $font-family-mono;
+    }
+
+    &__dir-selected-pill {
+        @include flex-row($spacing-2);
+        align-items: center;
+        margin-bottom: $spacing-3;
+        padding: $spacing-2 $spacing-3;
+        border-radius: $border-radius-2xl;
+        corner-shape: superellipse(1.2);
+        border: 1px solid rgba($color-primary-light, 0.2);
+        background: rgba($color-primary-light, 0.08);
+        font-family: $font-family-mono;
+        font-size: $font-size-xs;
+        color: $color-primary-light;
+    }
+
+    &__dir-tree {
+        max-height: 20rem;
+        overflow-y: auto;
+        border: 0.5px solid color.adjust($color-secondary, $lightness: 5%);
+        background: alpha($color-primary-dark, 1);
+        border-radius: $border-radius-2xl;
+        corner-shape: superellipse(1.2);
+        padding: $spacing-2;
+        @include custom-scrollbar(4px);
+    }
+
+    &__dir-node {
+        margin-bottom: $spacing-1;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__dir-node-row {
+        @include flex-row($spacing-2);
+        align-items: center;
+    }
+
+    &__dir-toggle {
+        @include flex-center;
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: $border-radius-md;
+        background: transparent;
+        color: $academic-powder-blue;
+        cursor: pointer;
+        @include transition((background-color, color));
+
+        &:hover {
+            background: rgba($color-white, 0.06);
+            color: $text-dark;
+        }
+    }
+
+    &__dir-select {
+        @include flex-row($spacing-2);
+        align-items: center;
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: $text-dark;
+        text-align: left;
+        padding: $spacing-2;
+        border-radius: $border-radius-lg;
+        cursor: pointer;
+        @include transition((background-color, color));
+
+        &:hover {
+            background: rgba($color-white, 0.05);
+        }
+
+        &--selected {
+            background: rgba($color-primary-light, 0.12);
+            color: $color-primary-light;
+        }
+    }
+
+    &__dir-children {
+        margin-top: $spacing-1;
+    }
+
+    &__dir-loading,
+    &__dir-empty,
+    &__dir-error {
+        @include flex-row($spacing-2);
+        align-items: center;
+        padding: $spacing-2 $spacing-3;
+        font-size: $font-size-xs;
+        color: $academic-powder-blue;
+        opacity: 0.8;
+    }
+
+    &__dir-error {
+        color: $color-error-light;
+    }
+
+    // ── Toggle checkbox ───────────────────────────────────────────────────────
+
+    &__toggle {
+        @include flex-row($spacing-3);
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        margin-top: $spacing-6;
+    }
+
+    &__toggle-input {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border-radius: $border-radius-5xl;
+        accent-color: $color-primary;
+        cursor: pointer;
+    }
+
+    &__toggle-label {
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+    }
+
+    // ── Hint text in Select items ─────────────────────────────────────────────
+
+    &__select-hint {
+        margin-left: $spacing-1;
+        font-size: $font-size-xs;
+        color: $academic-powder-blue;
+        opacity: 0.6;
+        font-style: italic;
+    }
+
+    // ── Connect GitHub Banner ─────────────────────────────────────────────────
+    &__connect-banner {
+        @include flex-row($spacing-4);
+        padding: $spacing-5;
+        background: rgba($color-primary-light, 0.05);
+        border: 1px dashed rgba($color-primary-light, 0.3);
+        border-radius: $border-radius-3xl;
+        corner-shape: superellipse(1.2);
+        align-items: center;
+    }
+
+    &__connect-banner-icon {
+        @include flex-center;
+        color: $color-primary-light;
+        background: rgba($color-primary-light, 0.15);
+        padding: $spacing-3;
+        border-radius: calc($border-radius-3xl - $spacing-5 * 0.75);
+        corner-shape: superellipse(1.2);
+    }
+
+    &__connect-banner-text {
+        flex: 1;
+        @include flex-col($spacing-1);
+    }
+
+    &__connect-banner-title {
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+        color: $text-dark;
+    }
+
+    &__connect-banner-desc {
+        font-size: $font-size-xs;
+        color: $academic-powder-blue;
+    }
+
+    // ── Alert ─────────────────────────────────────────────────────────────────
+    &__alert {
+        @include flex-row($spacing-3);
+        padding: $spacing-3 $spacing-4;
+        border-radius: $border-radius-2xl;
+        corner-shape: superellipse(1.2);
+        font-size: $font-size-sm;
+        align-items: flex-start;
+        line-height: $line-height-snug;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        &--info {
+            background: rgba($color-info, 0.1);
+            border: 1px solid rgba($color-info, 0.2);
+            color: $color-info-light;
+        }
+    }
+}
+
+// ==========================================================================
+// DEPLOYMENTS PAGE
+// ==========================================================================
+
+.deployments-page {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    height: 100%;
+
+    &__repo-pill {
+        font-family: var(--font-mono, monospace);
+    }
+
+    &__provider-banner {
+        @include flex-row($spacing-3);
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing-3;
+        border-radius: $border-radius-lg;
+        border: 1px solid rgba($color-warning, 0.3);
+        background: rgba($color-warning, 0.05);
+        color: rgba($color-warning, 0.9);
+        font-size: $font-size-xs;
+    }
+
+    &__vercel-panel {
+        @include flex-row($spacing-2);
+        flex-wrap: wrap;
+        align-items: center;
+        padding: $spacing-3;
+        border-radius: $border-radius-lg;
+        border: 1px solid rgba($color-white, 0.08);
+        background: rgba($color-gray-900, 0.35);
+    }
+
+    &__content {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    &__danger {
+        padding-top: $spacing-6;
+        border-top: 1px solid rgba($color-white, 0.05);
+    }
+
+    &__danger-card {
+        max-width: 640px;
+        border-radius: $border-radius-xl;
+        border: 1px solid rgba($color-error, 0.2);
+        background: rgba($color-error, 0.03);
+        padding: $spacing-6;
+    }
+
+    &__danger-header {
+        @include flex-row($spacing-2);
+        align-items: center;
+        margin-bottom: $spacing-3;
+    }
+
+    &__danger-action {
+        border: 1px solid rgba($color-error, 0.3);
+        background: transparent;
+
+        &:hover {
+            background: rgba($color-error, 0.1);
+        }
+    }
+}
+
+.deployment-status-badge__icon {
+    margin-right: $spacing-1;
+}
+
+.deployments-detail {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-5;
+
+    &--loading {
+        min-height: 320px;
+        @include flex-row($spacing-2);
+        align-items: center;
+        justify-content: center;
+        color: $academic-powder-blue;
+    }
+
+    &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: $spacing-3;
+    }
+
+    &__header-main {
+        @include flex-row($spacing-2);
+        align-items: flex-start;
+    }
+
+    &__header-actions {
+        @include flex-row($spacing-2);
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    &__title-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+    }
+
+    &__title {
+        @include flex-row($spacing-2);
+        align-items: center;
+        margin: 0;
+        font-size: $font-size-xl;
+        color: $color-gray-200;
+    }
+
+    &__id {
+        color: $color-gray-500;
+        font-family: var(--font-mono, monospace);
+        font-size: $font-size-lg;
+    }
+
+    &__subtitle {
+        margin: 0;
+        color: $color-gray-500;
+        font-size: $font-size-sm;
+
+        strong {
+            color: $color-gray-300;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+        gap: $spacing-4;
+
+        @media (max-width: $breakpoint-lg) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__logs-viewer {
+        min-height: 520px;
+    }
+
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-4;
+    }
+
+    &__commit-message {
+        color: $color-gray-200;
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-2;
+    }
+
+    &__commit-meta {
+        @include flex-row($spacing-1);
+        align-items: center;
+        color: $color-gray-500;
+        font-size: $font-size-xs;
+        margin-bottom: $spacing-2;
+    }
+
+    &__dot {
+        opacity: 0.7;
+    }
+
+    &__mono {
+        font-family: var(--font-mono, monospace);
+    }
+
+    &__author {
+        @include flex-row($spacing-1);
+        align-items: center;
+        color: $color-gray-500;
+        font-size: $font-size-xs;
+    }
+
+    &__timeline-row {
+        display: flex;
+        justify-content: space-between;
+        gap: $spacing-3;
+        padding: $spacing-2 0;
+        border-bottom: 1px solid rgba($color-white, 0.05);
+        color: $color-gray-400;
+        font-size: $font-size-sm;
+
+        &--strong {
+            color: $color-gray-200;
+            font-weight: $font-weight-medium;
+            border-bottom: none;
+            padding-top: $spacing-3;
+        }
+    }
+
+    &__timeline-label {
+        color: $color-gray-500;
+    }
+
+    &__live-banner {
+        @include flex-row($spacing-2);
+        align-items: center;
+        color: $color-info-light;
+        font-size: $font-size-xs;
+        padding: $spacing-2 $spacing-3;
+        border-radius: $border-radius-lg;
+        border: 1px solid rgba($color-info, 0.25);
+        background: rgba($color-info, 0.08);
+    }
+}
+
+// ==========================================================================
+// LOGS PAGE
+// ==========================================================================
+
+.logs-page {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    height: 100%;
+
+    &__content {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+}

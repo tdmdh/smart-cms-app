@@ -1,0 +1,73 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar-user-profile {
+    display: flex;
+    align-items: center;
+    padding: $spacing-2;
+    color: var(--text-secondary);
+    text-decoration: none;
+    @include transition((background-color, color));
+    cursor: pointer;
+    border-radius: calc($border-radius-3xl - $spacing-2 * 0.75);
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+
+    &:hover,
+    &[data-state="open"] {
+        background-color: rgba($color-primary, 0.08);
+        color: var(--text-primary);
+    }
+
+    &--collapsed {
+        justify-content: center;
+        padding: $spacing-2;
+        padding-block: $spacing-2;
+        background: transparent;
+    }
+
+    &__avatar {
+        flex-shrink: 0;
+    }
+
+    &__info {
+        flex: 1;
+        margin-left: $spacing-3;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__name {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        line-height: 1.1;
+        margin-bottom: $spacing-1;
+        @include text-truncate;
+    }
+
+    &__email {
+        font-size: $font-size-xs;
+        color: var(--text-secondary);
+        line-height: 1.1;
+        @include text-truncate;
+    }
+
+    &__action {
+        flex-shrink: 0;
+        margin-inline: $spacing-2;
+        color: var(--text-tertiary);
+        display: flex;
+        align-items: center;
+        @include transition(color);
+        padding: $spacing-1;
+
+        .sidebar-user-profile:hover & {
+            color: var(--text-secondary);
+        }
+    }
+}

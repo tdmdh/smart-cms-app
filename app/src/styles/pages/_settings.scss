@@ -1,0 +1,35 @@
+// ==========================================================================
+// SETTINGS PAGE STYLES
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.settings {
+    padding: $spacing-6;
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    &__header {
+        margin-bottom: $spacing-6;
+    }
+
+    &__title {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+    }
+
+    &__section {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-color);
+        border-radius: $border-radius-xl;
+        padding: $spacing-6;
+        margin-bottom: $spacing-4;
+    }
+
+    &__section-title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        margin-bottom: $spacing-4;
+    }
+}

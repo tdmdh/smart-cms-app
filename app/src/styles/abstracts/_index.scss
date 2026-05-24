@@ -1,0 +1,11 @@
+// ==========================================================================
+// ABSTRACTS INDEX
+// ==========================================================================
+// This file exports all abstract partials for easy importing.
+// Usage: @use 'abstracts' as *;
+// ==========================================================================
+
+@forward 'variables';
+@forward 'functions';
+@forward 'mixins';
+@forward 'placeholders';

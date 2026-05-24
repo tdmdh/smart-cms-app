@@ -1,0 +1,164 @@
+// ==========================================================================
+// FUNCTIONS
+// ==========================================================================
+// Custom SCSS functions for calculations and utilities.
+// ==========================================================================
+
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'variables' as *;
+
+// --------------------------------------------------------------------------
+// Unit Conversion
+// --------------------------------------------------------------------------
+
+/// Convert pixels to rem
+/// @param {Number} $px - Pixel value to convert
+/// @param {Number} $base - Base font size (default: 16px)
+/// @return {Number} - Rem value
+@function rem($px, $base: 16) {
+    @return math.div($px, $base) * 1rem;
+}
+
+/// Convert pixels to em
+/// @param {Number} $px - Pixel value to convert
+/// @param {Number} $base - Base font size (default: 16px)
+/// @return {Number} - Em value
+@function em($px, $base: 16) {
+    @return math.div($px, $base) * 1em;
+}
+
+// --------------------------------------------------------------------------
+// Color Functions
+// --------------------------------------------------------------------------
+
+/// Lighten color by percentage
+/// @param {Color} $color - Color to lighten
+/// @param {Number} $amount - Percentage to lighten
+/// @return {Color} - Lightened color
+@function tint($color, $amount) {
+    @return color.mix(white, $color, $amount);
+}
+
+/// Darken color by percentage
+/// @param {Color} $color - Color to darken
+/// @param {Number} $amount - Percentage to darken
+/// @return {Color} - Darkened color
+@function shade($color, $amount) {
+    @return color.mix(black, $color, $amount);
+}
+
+/// Create color with alpha
+/// @param {Color} $color - Base color
+/// @param {Number} $alpha - Alpha value (0-1)
+/// @return {Color} - Color with alpha
+@function alpha($color, $alpha) {
+    @return color.change($color, $alpha: $alpha);
+}
+
+/// Get contrast text color (black or white)
+/// @param {Color} $bg-color - Background color
+/// @return {Color} - Black or white based on contrast
+@function contrast-color($bg-color) {
+    $lightness: color.lightness($bg-color);
+
+    @if $lightness >50% {
+        @return $color-gray-900;
+    }
+
+    @else {
+        @return $color-white;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Spacing Functions
+// --------------------------------------------------------------------------
+
+/// Get spacing value from scale
+/// @param {Number} $multiplier - Multiplier for base spacing
+/// @return {Number} - Spacing value in rem
+@function space($multiplier) {
+    @return $multiplier * 0.25rem;
+}
+
+// --------------------------------------------------------------------------
+// String Functions
+// --------------------------------------------------------------------------
+
+/// Strip unit from a number
+/// @param {Number} $number - Number with unit
+/// @return {Number} - Number without unit
+@function strip-unit($number) {
+    @if meta.type-of($number)=='number' and not math.is-unitless($number) {
+        @return math.div($number, $number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+// --------------------------------------------------------------------------
+// Z-Index Function
+// --------------------------------------------------------------------------
+
+/// Z-index map for consistent layering
+$z-layers: (
+    'base': 0,
+    'dropdown': $z-index-dropdown,
+    'sticky': $z-index-sticky,
+    'fixed': $z-index-fixed,
+    'modal-backdrop': $z-index-modal-backdrop,
+    'modal': $z-index-modal,
+    'popover': $z-index-popover,
+    'tooltip': $z-index-tooltip,
+    'toast': $z-index-toast
+);
+
+/// Get z-index from layer name
+/// @param {String} $layer - Layer name
+/// @return {Number} - Z-index value
+@function z($layer) {
+    @if map.has-key($z-layers, $layer) {
+        @return map.get($z-layers, $layer);
+    }
+
+    @warn "Unknown z-index layer: #{$layer}";
+    @return 0;
+}
+
+// --------------------------------------------------------------------------
+// Breakpoint Function
+// --------------------------------------------------------------------------
+
+/// Get breakpoint value
+/// @param {String} $name - Breakpoint name
+/// @return {Number} - Breakpoint value
+@function breakpoint($name) {
+    @if map.has-key($breakpoints, $name) {
+        @return map.get($breakpoints, $name);
+    }
+
+    @warn "Unknown breakpoint: #{$name}";
+    @return null;
+}
+
+// --------------------------------------------------------------------------
+// Math Functions
+// --------------------------------------------------------------------------
+
+/// Calculate fluid value between two sizes
+/// @param {Number} $min-size - Minimum size
+/// @param {Number} $max-size - Maximum size
+/// @param {Number} $min-vw - Minimum viewport width
+/// @param {Number} $max-vw - Maximum viewport width
+/// @return {String} - Clamp value for fluid sizing
+@function fluid($min-size, $max-size, $min-vw: 320, $max-vw: 1280) {
+    $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
+    $y-intercept: $min-size - ($slope * $min-vw);
+
+    @return clamp(#{$min-size}px,
+        #{$y-intercept}px + #{$slope * 100}vw,
+        #{$max-size}px);
+}

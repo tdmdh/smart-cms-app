@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@source "../app/**/*.{js,ts,jsx,tsx}";
+@source "../src/**/*.{js,ts,jsx,tsx}";
+
+.toast {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.alert {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}   
+
+.dropdown-menu__sub__content {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.select-content {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+

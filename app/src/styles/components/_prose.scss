@@ -1,0 +1,227 @@
+// ==========================================================================
+// PROSE / MARKDOWN VIEWER
+// ==========================================================================
+
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+.markdown-viewer {
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: var(--text-secondary);
+  max-width: 100%;
+
+  // ---- Headings ----
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $font-family-heading;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+    line-height: $line-height-snug;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1 {
+    font-size: $font-size-xl;
+    letter-spacing: $letter-spacing-tight;
+  }
+
+  h2 {
+    font-size: $font-size-lg;
+  }
+
+  h3 {
+    font-size: $font-size-base;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+  }
+
+  // ---- Paragraphs ----
+  p {
+    margin: 0 0 0.875em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // ---- Inline emphasis ----
+  strong {
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  // ---- Links ----
+  a {
+    color: $color-primary-light;
+    text-decoration: underline;
+    text-decoration-color: alpha($color-primary-light, 0.35);
+    text-underline-offset: 3px;
+    @include transition((color, text-decoration-color));
+
+    &:hover {
+      color: $color-accent-light;
+      text-decoration-color: alpha($color-accent-light, 0.55);
+    }
+  }
+
+  // ---- Inline code ----
+  :not(pre)>code {
+    font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+    font-size: 0.84em;
+    font-weight: $font-weight-medium;
+    color: $color-accent-light;
+    background: alpha($color-accent, 0.1);
+    border: 1px solid alpha($color-accent, 0.2);
+    padding: 1px $spacing-1;
+    border-radius: $border-radius-base;
+  }
+
+  // ---- Code block ----
+  pre {
+    background: alpha($color-gray-900, 0.55);
+    border: 1px solid alpha($color-gray-700, 0.3);
+    border-radius: $border-radius-lg;
+    padding: $spacing-3 $spacing-4;
+    overflow-x: auto;
+    margin: 0.875em 0;
+    @include custom-scrollbar;
+
+    code {
+      font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+      font-size: $font-size-xs;
+      color: $color-gray-300;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  // ---- Blockquote ----
+  blockquote {
+    margin: 0.875em 0;
+    padding: $spacing-2 $spacing-4;
+    border-left: 2px solid $color-primary-light;
+    background: alpha($color-primary, 0.05);
+    border-radius: 0 $border-radius-md $border-radius-md 0;
+
+    p {
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+  }
+
+  // ---- Lists ----
+  ul,
+  ol {
+    padding-left: $spacing-5;
+    margin: 0 0 0.875em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: 0.3em;
+
+    &::marker {
+      color: $color-primary-light;
+    }
+
+    // Nested lists
+    >ul,
+    >ol {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+  }
+
+  // ---- Horizontal rule ----
+  hr {
+    border: none;
+    border-top: 1px solid alpha($color-gray-700, 0.3);
+    margin: 1.25em 0;
+  }
+
+  // ---- Tables ----
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-xs;
+    margin: 0.875em 0;
+    overflow: hidden;
+    border-radius: $border-radius-md;
+    border: 1px solid alpha($color-gray-700, 0.25);
+  }
+
+  th {
+    padding: $spacing-2 $spacing-3;
+    font-weight: $font-weight-semibold;
+    text-align: left;
+    color: var(--text-secondary);
+    background: alpha($color-primary, 0.08);
+    border-bottom: 1px solid alpha($color-gray-700, 0.25);
+  }
+
+  td {
+    padding: $spacing-2 $spacing-3;
+    color: var(--text-secondary);
+    border-bottom: 1px solid alpha($color-gray-700, 0.1);
+    @include transition(background-color);
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: alpha($color-primary, 0.03);
+  }
+
+  // ---- Images ----
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: $border-radius-lg;
+    display: block;
+    margin: 0.875em 0;
+    border: 1px solid alpha($color-gray-700, 0.15);
+  }
+
+  // ---- First / last child margin reset ----
+  >*:first-child {
+    margin-top: 0;
+  }
+
+  >*:last-child {
+    margin-bottom: 0;
+  }
+}
