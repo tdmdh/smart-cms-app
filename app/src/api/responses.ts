@@ -1,3 +1,15 @@
+/**
+ * Shared response types for the API layer.
+ *
+ * ApiResponse<T> is the uniform envelope returned by ApiClient.request().
+ * ErrorResponse and MessageResponse mirror the two most common backend shapes.
+ * The type-guard helpers (isErrorResponse, isMessageResponse) were used in
+ * route handlers to discriminate union responses before returning to the client.
+ *
+ * The route handlers have been removed after migrating to TanStack Query.
+ * This file is kept as reference.
+ */
+
 export type ErrorResponse = { error: string };
 export type MessageResponse = { message: string };
 

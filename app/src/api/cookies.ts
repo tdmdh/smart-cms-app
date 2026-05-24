@@ -1,3 +1,14 @@
+/**
+ * HTTP-only cookie helpers for auth tokens used by the Next.js route handlers.
+ *
+ * - setAuthCookies  — writes access_token (15 min) and refresh_token (7 days)
+ *                     as httpOnly, secure, SameSite=Lax cookies on a NextResponse
+ * - clearAuthCookies — expires both cookies immediately (used on logout)
+ *
+ * The route handlers that called these helpers have been removed after
+ * migrating to TanStack Query. This file is kept as reference.
+ */
+
 import { NextResponse } from "next/server";
 
 const COOKIE_CONFIG = {

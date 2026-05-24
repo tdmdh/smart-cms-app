@@ -1,6 +1,13 @@
 /**
  * Utility to reliably get the current workspace ID for API requests.
- * Prioritizes the URL (standard in App Router) before falling back to localStorage.
+ *
+ * Resolution order:
+ *  1. URL path — /dashboard/[workspaceId]/... is the canonical source of truth
+ *  2. redux-persist localStorage key (persist:root → workspace.currentWorkspaceId)
+ *
+ * This ID was injected as the X-Workspace-ID request header by ApiClient.
+ * The route handlers and ApiClient have been removed after migrating to
+ * TanStack Query. This file is kept as reference.
  */
 export function getActiveWorkspaceId(): string | null {
     if (typeof window === 'undefined') {

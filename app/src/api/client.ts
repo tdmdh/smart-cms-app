@@ -1,3 +1,17 @@
+/**
+ * Singleton fetch wrapper used by the Next.js route handlers (app/api/).
+ *
+ * Key behaviours:
+ *  - Injects X-Workspace-ID from redux-persist on every request
+ *  - On 401, coordinates a single token refresh across concurrent in-flight
+ *    requests (queue-based, race-safe) before replaying them
+ *  - Exponential back-off retry on 429 / network errors (up to retryCount)
+ *  - AbortController-based 90 s timeout per attempt
+ *
+ * The route handlers that consumed this client have been removed after
+ * migrating data-fetching to TanStack Query. This file is kept as reference.
+ */
+
 import { Endpoint, getBackendApiUrl } from "./config";
 import { ApiResponse } from "./responses";
 

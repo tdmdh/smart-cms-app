@@ -1,3 +1,16 @@
+/**
+ * API configuration and typed endpoint builder.
+ *
+ * `Endpoint<Req, Res>` is a typed descriptor that pairs an HTTP method + path
+ * with phantom request/response types. Domain modules (e.g. src/api/auth/) used
+ * to export factories that returned these descriptors; they were consumed by
+ * ApiClient.request() and by the Next.js route handlers under app/api/.
+ *
+ * The domain endpoint files and route handlers have been removed after migrating
+ * data-fetching to TanStack Query. This config module is kept as reference for
+ * the URL-resolution logic (local vs. production, env-var overrides).
+ */
+
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface Endpoint<_Req = void, _Res = unknown> {
